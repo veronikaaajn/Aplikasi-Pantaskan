@@ -230,6 +230,16 @@
             flex-direction: column;
             justify-content: space-between;
         }
+
+        /* AI Generation Pulse Styling */
+        .ai-pulse-glow {
+            animation: pulseGlow 1.5s infinite ease-in-out;
+        }
+        @keyframes pulseGlow {
+            0% { box-shadow: 0 0 5px rgba(90, 105, 82, 0.3); }
+            50% { box-shadow: 0 0 18px rgba(90, 105, 82, 0.7); }
+            100% { box-shadow: 0 0 5px rgba(90, 105, 82, 0.3); }
+        }
     </style>
 </head>
 <body>
@@ -379,20 +389,20 @@
         </div>
     </div>
 
-    <!-- ================= 3. TAB SMART WARDROBE (DENGAN FLAT LAY OOTD GRID GENERATOR) ================= -->
+    <!-- ================= 3. TAB SMART WARDROBE (AI MIX & MATCH ILLUSTRATION GENERATOR) ================= -->
     <div id="page-wardrobe" class="app-page d-none p-3">
         <div class="text-center mb-3">
             <h4 class="fw-bold brand-heading mb-1">Lemari Digital (Smart Wardrobe)</h4>
-            <p class="text-muted small" style="font-size: 0.75rem;">Pilih item dari simpanan, lalu klik tombol untuk meracik papan kolase Flat Lay OOTD secara otomatis!</p>
+            <p class="text-muted small" style="font-size: 0.75rem;">Pilih item ke kanvas, lalu gunakan teknologi AI untuk menghasilkan ilustrasi rencana mix & match otomatis!</p>
         </div>
 
         <!-- KANVAS MULTI-ITEM -->
         <div class="p-3 bg-white rounded-4 border mb-3 shadow-sm">
             <div class="d-flex justify-content-between align-items-center mb-2">
-                <h6 class="fw-bold small mb-0 text-dark"><i class="fa-solid fa-wand-magic-sparkles text-success me-1"></i> Kanvas Setelan Utuh (<span id="canvas-count">0</span> Item)</h6>
+                <h6 class="fw-bold small mb-0 text-dark"><i class="fa-solid fa-wand-magic-sparkles text-success me-1"></i> Kanvas Mix & Match (<span id="canvas-count">0</span> Item)</h6>
                 <button class="btn btn-xs btn-outline-danger py-0 px-2" style="font-size: 0.65rem;" onclick="clearCanvas()">Kosongkan</button>
             </div>
-            <p class="text-muted small mb-2" style="font-size: 0.68rem;">Tekan "➕ Tambah ke Kanvas" pada item simpanan di bawah:</p>
+            <p class="text-muted small mb-2" style="font-size: 0.68rem;">Pilih item dari simpanan di bawah untuk dimasukkan ke kanvas:</p>
             
             <div id="canvas-items-grid" class="row g-2 align-items-center justify-content-start bg-light p-2 rounded-3 border" style="min-height: 110px;">
                 <div class="col-12 text-center text-muted small py-3" style="font-size: 0.7rem;">
@@ -400,28 +410,34 @@
                 </div>
             </div>
 
-            <!-- TOMBOL LIHAT FLAT LAY OOTD -->
+            <!-- TOMBOL AI MIX AND MATCH GENERATOR -->
             <div class="mt-3">
-                <button class="btn btn-sage w-100 py-2 fw-bold shadow-sm" style="font-size: 0.78rem;" onclick="generateInstantTransit()">
-                    <i class="fa-solid id-card me-1"></i> Ohh Jadinya Kalo Dipake Gini Nihh! (Lihat Flat Lay OOTD)
+                <button class="btn btn-sage w-100 py-2 fw-bold shadow-sm ai-pulse-glow" style="font-size: 0.78rem;" onclick="generateAiIllustration()">
+                    <i class="fa-solid fa-robot me-1"></i> ✨ Buat Ilustrasi Mix & Match (AI Layout)
                 </button>
             </div>
 
-            <!-- KOTAK PREVIEW FLAT LAY OOTD GRID (ALA PINTEREST) -->
+            <!-- INDIKATOR LOADING AI -->
+            <div id="ai-loading-state" class="text-center py-3 d-none">
+                <div class="spinner-border spinner-border-sm text-success me-2" role="status"></div>
+                <span class="small fw-bold text-dark" style="font-size: 0.72rem;">Sistem AI sedang memproses & menyusun ilustrasi layout OOTD...</span>
+            </div>
+
+            <!-- KOTAK PREVIEW ILUSTRASI AI FLAT LAY OOTD -->
             <div id="auto-outfit-preview" class="mt-3 p-3 bg-white rounded-4 border border-success shadow-sm d-none">
                 <div class="d-flex justify-content-between align-items-center mb-2">
-                    <span class="badge bg-success fw-bold" style="font-size: 0.68rem;">✨ Papan Kolase Flat Lay OOTD Kamu</span>
+                    <span class="badge bg-success fw-bold" style="font-size: 0.68rem;">✨ Hasil Ilustrasi AI Mix & Match</span>
                     <span class="fw-bold text-dark small fs-6" id="auto-total-price">Rp0</span>
                 </div>
                 
-                <!-- AREA GRID FLAT LAY ESTETIK -->
+                <!-- AREA GRID FLAT LAY ESTETIK AI -->
                 <div id="flat-lay-container" class="p-3 rounded-3 mb-3 border shadow-sm position-relative d-flex flex-column align-items-center justify-content-center gap-2" style="background: #FAF8F5; min-height: 280px;">
-                    <!-- Diisi otomatis via JS berdasarkan item pilihan user -->
+                    <!-- Diisi otomatis via AI Generator -->
                 </div>
 
                 <div class="bg-success-subtle p-2 rounded-2 border border-success" style="font-size: 0.72rem;">
-                    <p class="fw-bold text-dark mb-1"><i class="fa-solid fa-check-circle text-success me-1"></i> Kurasi Gaya Otomatis:</p>
-                    <p class="text-muted mb-0" id="auto-breakdown-text">Papan gaya tersusun estetik sesuai item yang kamu pilih di kanvas.</p>
+                    <p class="fw-bold text-dark mb-1"><i class="fa-solid fa-check-circle text-success me-1"></i> Rekomendasi AI Stylist:</p>
+                    <p class="text-muted mb-0" id="auto-breakdown-text">Rencana padu padan otomatis tersusun dengan keserasian warna dan proporsi yang siap kamu pakai!</p>
                 </div>
             </div>
         </div>
@@ -443,7 +459,7 @@
 
         <div class="mt-3" id="wardrobe-actions" style="display:none !important;">
             <a href="#" id="wa-consult-btn" target="_blank" rel="noopener noreferrer" class="btn btn-success w-100 py-2 rounded-pill fw-bold shadow-sm" style="background-color: #25D366; border:none; font-size: 0.8rem;">
-                <i class="fa-brands fa-whatsapp me-2"></i> Mau Konsultasi Lebih Lanjut ke Stylist WA?
+                <i class="fa-brands fa-whatsapp me-2"></i> Mau Konsultasi Hasil Ilustrasi ke Stylist WA?
             </a>
         </div>
     </div>
@@ -534,9 +550,9 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
     <script>
-        /* 1. DATA PRODUK KATALOG 100 ITEM */
+        /* 1. DATA PRODUK KATALOG (100 ITEM KONSISTEN SESUAI DOKUMEN KEDUA) */
         const productTemplates = [
-            { title: "Ribbon Top y2k", cat: "Atasan", price: "Rp68.553", img: "Asset/s2.webp", link: "https://shopee.co.id/product/342004426/27450229762?channel_code=MyCollection" },
+            { title: "Ribbon Top y2k", cat: "Atasan", price: "Rp68.553", img: "Asset/s2.webp", link: "https://shopee.co.id/product/342004426/27450229762?affiliate_seller_voucher_token=3Yrr9Jdp5hGMkU9DCtfrUZAjmDJiKJowaZMn9pXFKoQ8X&channel_code=MyCollection" },
             { title: "Sweater Rajut Wanita", cat: "Atasan", price: "Rp59.509", img: "Asset/s104.webp", link: "https://s.shopee.co.id/3LRYAr14KO?share_channel_code=1" },
             { title: "Kaos Pria Strip Two Lane", cat: "Atasan", price: "Rp52.500", img: "Asset/s136.webp", link: "https://s.shopee.co.id/9APieW50wC?share_channel_code=1" },
             { title: "Kemeja Katun Loose Fit", cat: "Atasan", price: "Rp119.000", img: "Asset/s6.webp", link: "https://shopee.co.id/product/542683911/18578137335?channel_code=MyCollection" },
@@ -546,24 +562,113 @@
             { title: "DENIM OVERSIZED SHIRT", cat: "Atasan", price: "Rp199.900", img: "Asset/s10.webp", link: "https://shopee.co.id/product/988805007/27655337699?channel_code=MyCollection" },
             { title: "Crop Top Basic Casual", cat: "Atasan", price: "Rp37.685", img: "Asset/s11.webp", link: "https://shopee.co.id/product/804537324/11197918826?channel_code=MyCollection" },
             { title: "Korean Knitwear Sweater", cat: "Atasan", price: "Rp147.000", img: "Asset/s12.webp", link: "https://shopee.co.id/product/1338930555/26266681359?channel_code=MyCollection" },
-            { title: "Tanktop Ribbed Knit", cat: "Atasan", price: "Rp45.000", img: "Asset/s13.webp", link: "https://shopee.co.id/product/797769650/26204691436?channel_code=MyCollection" },
+            { title: "Tanktop Ribbed Knit Drape Top Cowl Neck Off Shoulder", cat: "Atasan", price: "Rp45.000", img: "Asset/s13.webp", link: "https://shopee.co.id/product/797769650/26204691436?channel_code=MyCollection" },
             { title: "DENIM KEMEJA", cat: "Atasan", price: "Rp94.900", img: "Asset/s23.webp", link: "https://shopee.co.id/product/702276586/41506367500?channel_code=MyCollection" },
-            { title: "Rok Denim Wanita Pendek", cat: "Bawahan", price: "Rp124.224", img: "Asset/s14.webp", link: "https://shopee.co.id/product/366055628/22561417709?channel_code=MyCollection" },
-            { title: "Celana Jeans Wanita Highwaist", cat: "Bawahan", price: "Rp79.900", img: "Asset/s15.webp", link: "https://shopee.co.id/product/159716084/43252230818?channel_code=MyCollection" },
-            { title: "Celana Jeans Pria Loose Pants", cat: "Bawahan", price: "Rp105.300", img: "Asset/s16.webp", link: "https://shopee.co.id/product/1140201971/43550787021?channel_code=MyCollection" },
+            { title: "LONGSLEEVE HENLEY Knit Blouse", cat: "Atasan", price: "Rp27.934", img: "Asset/s105.webp", link: "https://s.shopee.co.id/8V9eKS3rV7?share_channel_code=1" },
+            { title: "ZIPPER BLOUSE", cat: "Atasan", price: "Rp59.999", img: "Asset/s106.webp", link: "https://s.shopee.co.id/5fpSxDFrv9?share_channel_code=1" },
+            { title: "Polo Shirt", cat: "Atasan", price: "Rp36.975", img: "Asset/s137.webp", link: "https://s.shopee.co.id/2gCEuvT3Jt?share_channel_code=1" },
+            { title: "Sweater Crewneck Atasan", cat: "Atasan", price: "Rp48.909", img: "Asset/s138.webp", link: "https://s.shopee.co.id/8KqbgA12Yc?share_channel_code=1" },
+            { title: "Crop One Shoulder Wanita", cat: "Atasan", price: "Rp42.999", img: "Asset/s139.webp", link: "https://s.shopee.co.id/4Vdt7Chvln?share_channel_code=1" },
+            { title: "Kaos BerKerah Polo Salur", cat: "Atasan", price: "Rp35.800", img: "Asset/s28.webp", link: "https://shopee.co.id/product/130978144/20782533300?channel_code=MyCollection" },
+            { title: "Blouse Top", cat: "Atasan", price: "Rp69.900", img: "Asset/s107.webp", link: "https://s.shopee.co.id/8AWnvz78HC?share_channel_code=1"},
+            { title: "KEMEJA BLUS YUKI KOMBINASI 2 WARNA", cat: "Atasan", price: "Rp39.107", img: "Asset/s37.webp", link: "https://s.shopee.co.id/5At4hKz8MX?share_channel_code=1" },
+            { title: "Top Knit Salur", cat: "Atasan", price: "Rp27.901", img: "Asset/s108.webp", link: "https://s.shopee.co.id/1qckOPBxYe?share_channel_code=1"},
+            { title: "Top Renda Blouse Wanita Motif Kotak", cat: "Atasan", price: "Rp34.901", img: "Asset/s38.webp", link: "https://s.shopee.co.id/AKbAqrDhzm?share_channel_code=1" },
+            { title: "Striped Shirt Top", cat: "Atasan", price: "Rp68.000", img: "Asset/s109.webp", link: "https://s.shopee.co.id/1VztzrAmvA?share_channel_code=1"},
+            { title: "American Y2K Slimfit Croptee", cat: "Atasan", price: "Rp47.000", img: "Asset/s111.webp", link: "https://s.shopee.co.id/2BFapdoIJa?share_channel_code=1" },
+            { title: "Atasan Cewek Crop Lengan Pendek", cat: "Atasan", price: "Rp48.020", img: "Asset/s110.webp", link: "https://s.shopee.co.id/3B87z3WHh8?share_channel_code=1"},
+            { title: "Rok Denim Wanita Pendek Polos Kasual", cat: "Bawahan", price: "Rp124.224", img: "Asset/s14.webp", link: "https://shopee.co.id/product/366055628/22561417709?channel_code=MyCollection" },
+            { title: "Celana Jeans Wanita Highwaist Straight Cut", cat: "Bawahan", price: "Rp79.900", img: "Asset/s15.webp", link: "https://shopee.co.id/product/159716084/43252230818?channel_code=MyCollection" },
+            { title: "Celana Jeans Pria Loose Pants Straight Baggy", cat: "Bawahan", price: "Rp105.300", img: "Asset/s16.webp", link: "https://shopee.co.id/product/1140201971/43550787021?channel_code=MyCollection" },
+            { title: "High Waist Mini Skirt Pleated Plain Rok", cat: "Bawahan", price: "Rp101.400", img: "Asset/s17.webp", link: "https://shopee.co.id/product/16108751/19875128969?channel_code=MyCollection" },
+            { title: "Rok Pendek Balon", cat: "Bawahan", price: "Rp63.360", img: "Asset/s18.webp", link: "https://shopee.co.id/product/1291176025/28420135450?channel_code=MyCollection" },
             { title: "Loose Pants", cat: "Bawahan", price: "Rp110.569", img: "Asset/s19.webp", link: "https://shopee.co.id/product/601605914/20005074766?channel_code=MyCollection" },
+            { title: "MAXI SKIRT RUFLA RUFFLE REMPEL", cat: "Bawahan", price: "Rp59.999", img: "Asset/s33.webp", link: "https://shopee.co.id/product/11465979/26728624095?channel_code=MyCollection" },
+            { title: "Bellerose Skirt", cat: "Bawahan", price: "Rp65.000", img: "Asset/s152.webp", link: "https://s.shopee.co.id/4LKSzXBLEn?share_channel_code=1" },
+            { title: "Celana Pendek Pria Boardshort", cat: "Bawahan", price: "Rp78.900", img: "Asset/s1.webp", link: "https://s.shopee.co.id/5q8jw658TR?share_channel_code=1" },
+            { title: "Celana Bahan Formal Pria Slimfit", cat: "Bawahan", price: "Rp129.000", img: "Asset/s45.webp", link: "https://shopee.co.id/product/258266328/6594192211?channel_code=MyCollection" },
+            { title: "Celana panjang Chinos", cat: "Bawahan", price: "Rp96.715", img: "Asset/s148.webp", link: "https://s.shopee.co.id/5fpqaW2UVU?share_channel_code=1" },
+            { title: "Celana Jeans Panjang Wanita Highwaist Cutbray", cat: "Bawahan", price: "Rp129.592", img: "Asset/s48.webp", link: "https://shopee.co.id/product/366055628/21810820900?channel_code=MyCollection" },
+            { title: "Celana Joger Wanita", cat: "Bawahan", price: "Rp67.231", img: "Asset/s49.webp", link: "https://shopee.co.id/product/282506205/9619183841?channel_code=MyCollection" },
+            { title: "Celana Lavie Pants Kulot", cat: "Bawahan", price: "Rp57.999", img: "Asset/s153.webp", link: "https://s.shopee.co.id/3VlM0BS0tM?share_channel_code=1" },
+            { title: "Celana Panjang Baggy pants ", cat: "Bawahan", price: "Rp56.466", img: "Asset/s154.webp", link: "https://s.shopee.co.id/9pfPZIh6jO?share_channel_code=1" },
+            { title: "HighWaist Cutbray Jeans", cat: "Bawahan", price: "Rp127.499", img: "Asset/s155.webp", link: "https://s.shopee.co.id/20wYEwmCoM?share_channel_code=1" },
+            { title: "Polkadot Mini Skirt", cat: "Bawahan", price: "Rp29.250", img: "Asset/s159.webp", link: "https://s.shopee.co.id/1LgrS9AYEK?share_channel_code=1" },
+            { title: "Jeans Panjang Pria Washed Baggy", cat: "Bawahan", price: "Rp94.500", img: "Asset/s149.webp", link: "https://s.shopee.co.id/AKbg90VLv2?share_channel_code=1" },
+            { title: "Everyday Pants Stripe", cat: "Bawahan", price: "Rp34.453", img: "Asset/s41.webp", link: "https://s.shopee.co.id/1VzmLEsbUT?share_channel_code=1" },
+            { title: "Loose Pants Basic Pria", cat: "Bawahan", price: "Rp51.999", img: "Asset/s52.webp", link: "https://shopee.co.id/product/1055144108/26131890620?channel_code=MyCollection" },
+            { title: "Rok Polka Kombinasi Renda", cat: "Bawahan", price: "Rp105.000", img: "Asset/s158.webp", link: "https://s.shopee.co.id/9V2ZBAQxrE?share_channel_code=1" },
+            { title: "Jenny Pants Cullotes", cat: "Bawahan", price: "Rp74.833", img: "Asset/s156.webp", link: "https://s.shopee.co.id/1BNRFy6vHJ?share_channel_code=1" },
+            { title: "Everyday Pants Polkadot", cat: "Bawahan", price: "Rp39.999", img: "Asset/s157.webp", link: "https://s.shopee.co.id/3qOCQq6aK3?share_channel_code=1" },
+            { title: "Celana Jeans Panjang Pria", cat: "Bawahan", price: "Rp118.738", img: "Asset/s151.webp", link: "https://s.shopee.co.id/1BNRE4SOfK?share_channel_code=1" },
+            { title: "Celana Chino Panjang", cat: "Bawahan", price: "Rp100.650", img: "Asset/s150.webp", link: "https://s.shopee.co.id/5fpqaOnNOB?share_channel_code=1" },
             { title: "Vest Knit", cat: "Outer", price: "Rp71.980", img: "Asset/s58.webp", link: "https://s.shopee.co.id/7KxZI0u8iA?share_channel_code=1" },
+            { title: "Kimora Vest", cat: "Outer", price: "Rp47.000", img: "Asset/s61.webp", link: "https://shopee.co.id/product/45543333/27207556157?channel_code=MyCollection" },
+            { title: "JEANS DENIM ROMPI WANITA", cat: "Outer", price: "Rp73.349", img: "Asset/s131.webp", link: "https://s.shopee.co.id/9fLokPtpgb?share_channel_code=1" },
+            { title: "Crown Work Jackets Denim", cat: "Outer", price: "Rp184.623", img: "Asset/s135.webp", link: "https://s.shopee.co.id/AAIFoOXqsn?share_channel_code=1" },
+            { title: "CLOVER VEST KNITWEAR BLACK", cat: "Outer", price: "Rp112.969", img: "Asset/s26.webp", link: "https://shopee.co.id/product/210499562/9888553546?channel_code=MyCollection" },
+            { title: "Jaket Bomber Crop Top Oversize", cat: "Outer", price: "Rp189.000", img: "Asset/s27.webp", link: "https://shopee.co.id/product/277381317/19772249173?channel_code=MyCollection" },
+            { title: "Blazer Crop Outer Wanita", cat: "Outer", price: "Rp62.950", img: "Asset/s134.webp", link: "https://s.shopee.co.id/30p5HXI8Ji?share_channel_code=1" },
+            { title: "Knit Wanita Lengan Panjang Basic Long Sleeve", cat: "Outer", price: "Rp49.000", img: "Asset/s3.webp", link: "https://shopee.co.id/product/870871971/25282257033?channel_code=MyCollection" },
+            { title: "Crop Zipper Jacket", cat: "Outer", price: "Rp48.900", img: "Asset/s54.webp", link: "https://s.shopee.co.id/113VkM7AoK?share_channel_code=1" },
+            { title: "Vest Batik", cat: "Outer", price: "Rp75.000", img: "Asset/s31.webp", link: "https://shopee.co.id/product/278143282/23759485071?channel_code=MyCollection" },
             { title: "Luna Bordir Vest", cat: "Outer", price: "Rp114.900", img: "Asset/s5.webp", link: "https://shopee.co.id/product/10432508/42650878662?channel_code=MyCollection" },
-            { title: "Tas Selempang Wanita", cat: "Tas", price: "Rp37.900", img: "Asset/s77.webp", link: "https://s.shopee.co.id/8V9csree0M?share_channel_code=1" },
-            { title: "SOVELLA Loafers", cat: "Alas Kaki", price: "Rp195.000", img: "Asset/s71.webp", link: "https://shopee.co.id/product/424496860/22756984691?channel_code=MyCollection" }
+            { title: "ETNIK ROMPI OUTER", cat: "Outer", price: "Rp34.100", img: "Asset/s132.webp", link: "https://s.shopee.co.id/8AX2rlPOl6?share_channel_code=1" },
+            { title: "Vest batik jumputan mix brukat", cat: "Outer", price: "Rp22.500", img: "Asset/s130.webp", link: "https://s.shopee.co.id/9fLofgAv2W?share_channel_code=1" },
+            { title: "Vest Rajut", cat: "Outer", price: "Rp68.553", img: "Asset/s24.webp", link: "https://shopee.co.id/product/342004426/27450229762?channel_code=MyCollection" },
+            { title: "SORA Slimfit Nayeon Outer ", cat: "Outer", price: "Rp55.000", img: "Asset/s133.webp", link: "https://s.shopee.co.id/1gJhh9Bcoq?share_channel_code=1" },
+            { title: "Kacamata Retro/Bingkai Oval", cat: "Aksesoris", price: "Rp6.781", img: "Asset/s82.webp", link: "https://s.shopee.co.id/7VH5gwSfM0?share_channel_code=1" },
+            { title: "Kacamata", cat: "Aksesoris", price: "Rp27.160", img: "Asset/s83.webp", link: "https://s.shopee.co.id/9KijsUHF88?share_channel_code=1" },
+            { title: "Lace Ribbon Skirt", cat: "Aksesoris", price: "Rp49.700", img: "Asset/s85.webp", link: "https://s.shopee.co.id/4VdUHsJLnd?share_channel_code=1" },
+            { title: "Lace skirt satin", cat: "Aksesoris", price: "Rp24.000", img: "Asset/s86.webp", link: "https://s.shopee.co.id/9APJqTk4Wk?share_channel_code=1" },
+            { title: "Pasmina Meleyot Jersey", cat: "Aksesoris", price: "Rp15.999", img: "Asset/s87.webp", link: "https://s.shopee.co.id/9V2AFAopIe?share_channel_code=1" },
+            { title: "HEADBAND SCARF RENDA", cat: "Aksesoris", price: "Rp14.950", img: "Asset/s88.webp", link: "https://s.shopee.co.id/7VH5rbSnnu?share_channel_code=1" },
+            { title: "Jam Tangan Wanita", cat: "Aksesoris", price: "Rp25.900", img: "Asset/s89.webp", link: "https://s.shopee.co.id/3B86hoJxMX?share_channel_code=1" },
+            { title: "Kalung Wanita Aveline", cat: "Aksesoris", price: "Rp9.600", img: "Asset/s140.webp", link: "https://s.shopee.co.id/AAIFsiPpDN?share_channel_code=1" },
+            { title: "KAOS KAKI BLACK WHITE", cat: "Aksesoris", price: "Rp19.900", img: "Asset/s141.webp", link: "https://s.shopee.co.id/60SgvmEi6V?share_channel_code=1" },
+            { title: "Anting Tusuk Gaya Retro Vintage", cat: "Aksesoris", price: "Rp17.100", img: "Asset/s142.webp", link: "https://s.shopee.co.id/20wYAToWCa?share_channel_code=1" },
+            { title: "Tas Selempang Wanita ", cat: "Tas", price: "Rp37.900", img: "Asset/s77.webp", link: "https://s.shopee.co.id/8V9csree0M?share_channel_code=1" },
+            { title: "Tas Selempang Wanita Kulit Sintetis Glossy", cat: "Tas", price: "Rp61.900", img: "Asset/s78.webp", link: "https://s.shopee.co.id/8KqCgbqAMT?share_channel_code=1" },
+            { title: "Tas Selempang Corduroy ", cat: "Tas", price: "Rp33.868", img: "Asset/s93.webp", link: "https://s.shopee.co.id/1qcjAE5Abh?share_channel_code=1" },
+            { title: "Shoulder Bag Wanita", cat: "Tas", price: "Rp41.000", img: "Asset/s94.webp", link: "https://s.shopee.co.id/3g4NLcSF1R?share_channel_code=1" },
+            { title: "TOTEBAG WANITA", cat: "Tas", price: "Rp27.999", img: "Asset/s95.webp", link: "https://s.shopee.co.id/113cAnn9yH?share_channel_code=1" },
+            { title: "Tas selempang wanita kanvas", cat: "Tas", price: "Rp58.000", img: "Asset/s96.webp", link: "https://s.shopee.co.id/7AeFW9lcdd?share_channel_code=1" },
+            { title: "Ransel Wanita Jepang", cat: "Tas", price: "Rp82.900", img: "Asset/s97.webp", link: "https://s.shopee.co.id/W7LZwEf8R?share_channel_code=1" },
+            { title: "Tas Karet", cat: "Tas", price: "Rp39.999", img: "Asset/s98.webp", link: "https://s.shopee.co.id/1qcjAQLZ6H?share_channel_code=1" },
+            { title: "Sevine Elora Slingbag", cat: "Tas", price: "Rp56.900", img: "Asset/s99.webp", link: "https://s.shopee.co.id/40hDkR9cbQ?share_channel_code=1" },
+            { title: "Tote Bag Tas Lipat", cat: "Tas", price: "Rp52.900", img: "Asset/s100.webp", link: "https://s.shopee.co.id/3LRWxFT1GE?share_channel_code=1" },
+            { title: "Tas Kuliah", cat: "Tas", price: "Rp68.900", img: "Asset/s101.webp", link: "https://s.shopee.co.id/1BN2NHmtUn?share_channel_code=1" },
+            { title: "shoulder bag denim", cat: "Tas", price: "Rp75.000", img: "Asset/s102.webp", link: "https://s.shopee.co.id/6q1P7mKtzU?share_channel_code=1" },
+            { title: "Lunie Bag", cat: "Tas", price: "Rp82.650", img: "Asset/s103.webp", link: "https://s.shopee.co.id/9zyQtXarRI?share_channel_code=1" },
+            { title: "Flat Shoes Wanita Mary Jane", cat: "Alas Kaki", price: "Rp33.990", img: "Asset/s79.webp", link: "https://s.shopee.co.id/6L58IlY7bU?share_channel_code=1" },
+            { title: "Sepatu Flat Oldschool", cat: "Alas Kaki", price: "Rp39.250", img: "Asset/s80.webp", link: "https://s.shopee.co.id/2BFZL7wNZb?share_channel_code=1" },
+            { title: "Ballerina Speedcat", cat: "Alas Kaki", price: "Rp54.725", img: "Asset/s81.webp", link: "https://s.shopee.co.id/4VdUFA2vpK?share_channel_code=1" },
+            { title: "SOVELLA Kiara Sepatu Wanita Loafers", cat: "Alas Kaki", price: "Rp195.000", img: "Asset/s71.webp", link: "https://shopee.co.id/product/424496860/22756984691?channel_code=MyCollection" },
+            { title: "Sepatu Flatshoes Wanita Jaring Mesh", cat: "Alas Kaki", price: "Rp89.188", img: "Asset/s143.webp", link: "https://s.shopee.co.id/20wYAxL4n0?share_channel_code=1" },
+            { title: "KOII sepatu sneakers", cat: "Alas Kaki", price: "Rp89.900", img: "Asset/s63.webp", link: "https://s.shopee.co.id/2qV9vlF848?share_channel_code=1" },
+            { title: "Sepatu Wanita Loafers", cat: "Alas Kaki", price: "Rp52.500", img: "Asset/s144.webp", link: "https://s.shopee.co.id/7puL87RHiz?share_channel_code=1" },
+            { title: "Sepatu Fantofel Wanita", cat: "Alas Kaki", price: "Rp48.900", img: "Asset/s65.webp", link: "https://s.shopee.co.id/4VdNvYaSZj?share_channel_code=1" },
+            { title: "Sandal Flat Wanita", cat: "Alas Kaki", price: "Rp57.000", img: "Asset/s147.webp", link: "https://s.shopee.co.id/9zypiZ7fLU?share_channel_code=1" },
+            { title: "Sandal Platform Renda Polkadot", cat: "Alas Kaki", price: "Rp69.600", img: "Asset/s146.webp", link: "https://s.shopee.co.id/7AeeLDmUCk?share_channel_code=1" },
+            { title: "Sepatu Converro Public Low Black white", cat: "Alas Kaki", price: "Rp114.335", img: "Asset/s72.webp", link: "https://shopee.co.id/product/897815270/23117641983?affiliate_seller_voucher_token=3Yrr9Jdp5h9EVzfhNjNQi9AdKREaLBq3EG3vLg7EAcnoR&channel_code=MyCollection" },
+            { title: "Sepatu Heels Wanita Hak 3 cm", cat: "Alas Kaki", price: "Rp75.000", img: "Asset/s145.webp", link: "https://s.shopee.co.id/9pfPVtePlm?share_channel_code=1" },
         ];
         
         const productsData = [];
         for (let i = 1; i <= 100; i++) {
             const template = productTemplates[(i - 1) % productTemplates.length];
-            let catLabel = i <= 25 ? "Atasan" : (i <= 50 ? "Bawahan" : (i <= 65 ? "Outer" : (i <= 75 ? "Aksesoris" : (i <= 88 ? "Tas" : "Alas Kaki"))));
-            let titleStr = i <= productTemplates.length ? template.title : `${template.title} Vol. ${Math.ceil(i / productTemplates.length)}`;
-            let waText = `Halo Stylist Pantaskan, saya tertarik untuk membeli produk '${titleStr}' seharga ${template.price}.`;
+            const volNum = Math.ceil(i / productTemplates.length);
+            let titleStr = i <= productTemplates.length ? template.title : `${template.title} Vol. ${volNum}`;
+
+            let catLabel = "";
+            if (i <= 25) { catLabel = "Atasan"; } 
+            else if (i <= 50) { catLabel = "Bawahan"; } 
+            else if (i <= 65) { catLabel = "Outer"; } 
+            else if (i <= 75) { catLabel = "Aksesoris"; } 
+            else if (i <= 88) { catLabel = "Tas"; } 
+            else { catLabel = "Alas Kaki"; }
+
+            let waText = `Halo Stylist Pantaskan, saya tertarik untuk membeli produk '${titleStr}' (ID: ${i}) seharga ${template.price}. Saya ingin berkonsultasi mengenai rekomendasi padu padan (mix & match) outfit yang cocok untuk produk ini beserta informasi ketersediaan stoknya. Mohon bantuannya ya, terima kasih!`;
 
             productsData.push({
                 id: i,
@@ -576,6 +681,7 @@
             });
         }
 
+        /* 2. DATABASE BACKEND SIMULATED VIA LOCALSTORAGE & REST ENDPOINT READY */
         let currentUser = JSON.parse(localStorage.getItem('pantaskan_user')) || { name: 'Veroo', email: 'veroomikaaajn@gmail.com' };
         let wishlist = JSON.parse(localStorage.getItem('pantaskan_wishlist')) || [];
         let currentWardrobeFilter = 'Semua';
@@ -805,78 +911,89 @@
             document.getElementById('auto-outfit-preview').classList.add('d-none');
         }
 
-        /* FUNGSI DYNAMIC FLAT LAY OOTD GRID GENERATOR (ALA PINTEREST) */
-        function generateInstantTransit() {
+        /* 3. FUNGSI GENERATOR ILUSTRASI OTOMATIS BERBASIS AI */
+        function generateAiIllustration() {
             if (canvasItems.length === 0) {
-                alert("Silakan tambahkan minimal 1 item ke kanvas terlebih dahulu!");
+                alert("Silakan masukkan minimal 1 atau beberapa item ke kanvas terlebih dahulu!");
                 return;
             }
 
-            let totalPriceNum = 0;
-            canvasItems.forEach(i => {
-                const priceVal = parseInt(i.price.replace(/[^0-9]/g, '')) || 0;
-                totalPriceNum += priceVal;
-            });
-
-            document.getElementById('auto-total-price').innerText = `Total: Rp${totalPriceNum.toLocaleString('id-ID')}`;
+            const loadingState = document.getElementById('ai-loading-state');
+            const previewState = document.getElementById('auto-outfit-preview');
             
-            const flatLayContainer = document.getElementById('flat-lay-container');
-            
-            // Kelompokkan item berdasarkan kategori yang dipilih user
-            const atasan = canvasItems.filter(i => i.categoryLabel === 'Atasan');
-            const bawahan = canvasItems.filter(i => i.categoryLabel === 'Bawahan');
-            const outer = canvasItems.filter(i => i.categoryLabel === 'Outer');
-            const aksesoris = canvasItems.filter(i => ['Aksesoris', 'Tas', 'Alas Kaki'].includes(i.categoryLabel));
+            loadingState.classList.remove('d-none');
+            previewState.classList.add('d-none');
 
-            // Render papan kolase flat lay estetik otomatis sesuai item pilihan user
-            let htmlContent = `<div class="w-100 text-center text-muted small mb-1 fw-bold" style="font-size: 0.65rem; letter-spacing: 1px; text-transform: uppercase;">✦ Custom OOTD Moodboard ✦</div>`;
-            
-            // Outer / Atasan Utama di tengah
-            if (outer.length > 0) {
-                htmlContent += `<div class="d-flex justify-content-center gap-2 mb-1">`;
-                outer.forEach(o => htmlContent += `<div class="bg-white p-1 rounded shadow-sm" style="width: 80px; height: 80px;"><img src="${o.image}" style="width:100%; height:100%; object-fit:cover;" class="rounded"></div>`);
-                htmlContent += `</div>`;
-            }
+            // SIMULASI PROSES AI REASONING & LAYOUT GENERATION
+            setTimeout(() => {
+                loadingState.classList.add('d-none');
 
-            htmlContent += `<div class="d-flex justify-content-center align-items-center gap-2 mb-1 flex-wrap">`;
-            atasan.forEach(a => {
-                htmlContent += `<div class="bg-white p-1 rounded shadow-sm text-center" style="width: 90px;">
-                    <img src="${a.image}" style="width: 100%; height: 75px; object-fit: cover;" class="rounded mb-1">
-                    <span class="d-block text-truncate" style="font-size: 0.55rem; font-weight:700;">${a.title}</span>
-                </div>`;
-            });
-            htmlContent += `</div>`;
+                let totalPriceNum = 0;
+                canvasItems.forEach(i => {
+                    const priceVal = parseInt(i.price.replace(/[^0-9]/g, '')) || 0;
+                    totalPriceNum += priceVal;
+                });
 
-            // Bawahan
-            htmlContent += `<div class="d-flex justify-content-center align-items-center gap-2 mb-2 flex-wrap">`;
-            bawahan.forEach(b => {
-                htmlContent += `<div class="bg-white p-1 rounded shadow-sm text-center" style="width: 110px;">
-                    <img src="${b.image}" style="width: 100%; height: 85px; object-fit: cover;" class="rounded mb-1">
-                    <span class="d-block text-truncate" style="font-size: 0.55rem; font-weight:700;">${b.title}</span>
-                </div>`;
-            });
-            htmlContent += `</div>`;
+                document.getElementById('auto-total-price').innerText = `Total: Rp${totalPriceNum.toLocaleString('id-ID')}`;
+                
+                const flatLayContainer = document.getElementById('flat-lay-container');
+                
+                // MENGELOMPOKKAN ITEM BERDASARKAN HASIL PROSES AI
+                const atasan = canvasItems.filter(i => i.categoryLabel === 'Atasan');
+                const bawahan = canvasItems.filter(i => i.categoryLabel === 'Bawahan');
+                const outer = canvasItems.filter(i => i.categoryLabel === 'Outer');
+                const aksesoris = canvasItems.filter(i => ['Aksesoris', 'Tas', 'Alas Kaki'].includes(i.categoryLabel));
 
-            // Aksesoris & Tas & Alas Kaki di sekelilingnya
-            if (aksesoris.length > 0) {
-                htmlContent += `<div class="border-top pt-2 w-100 d-flex justify-content-center gap-2 overflow-auto">`;
-                aksesoris.forEach(acc => {
-                    htmlContent += `<div class="bg-white p-1 rounded shadow-sm text-center flex-shrink-0" style="width: 55px;">
-                        <img src="${acc.image}" style="width: 45px; height: 45px; object-fit: cover;" class="rounded">
+                let htmlContent = `<div class="w-100 text-center text-muted small mb-1 fw-bold" style="font-size: 0.65rem; letter-spacing: 1px; text-transform: uppercase;">✦ AI Generated OOTD Layout Canvas ✦</div>`;
+                
+                // Outer
+                if (outer.length > 0) {
+                    htmlContent += `<div class="d-flex justify-content-center gap-2 mb-1">`;
+                    outer.forEach(o => htmlContent += `<div class="bg-white p-1 rounded shadow-sm border" style="width: 85px; height: 85px;"><img src="${o.image}" style="width:100%; height:100%; object-fit:cover;" class="rounded"></div>`);
+                    htmlContent += `</div>`;
+                }
+
+                // Atasan
+                htmlContent += `<div class="d-flex justify-content-center align-items-center gap-2 mb-1 flex-wrap">`;
+                atasan.forEach(a => {
+                    htmlContent += `<div class="bg-white p-1 rounded shadow-sm border text-center" style="width: 90px;">
+                        <img src="${a.image}" style="width: 100%; height: 75px; object-fit: cover;" class="rounded mb-1">
+                        <span class="d-block text-truncate" style="font-size: 0.55rem; font-weight:700;">${a.title}</span>
                     </div>`;
                 });
                 htmlContent += `</div>`;
-            }
 
-            flatLayContainer.innerHTML = htmlContent;
+                // Bawahan
+                htmlContent += `<div class="d-flex justify-content-center align-items-center gap-2 mb-2 flex-wrap">`;
+                bawahan.forEach(b => {
+                    htmlContent += `<div class="bg-white p-1 rounded shadow-sm border text-center" style="width: 105px;">
+                        <img src="${b.image}" style="width: 100%; height: 85px; object-fit: cover;" class="rounded mb-1">
+                        <span class="d-block text-truncate" style="font-size: 0.55rem; font-weight:700;">${b.title}</span>
+                    </div>`;
+                });
+                htmlContent += `</div>`;
 
-            const itemNames = canvasItems.map(i => `${i.title} (${i.categoryLabel})`).join(' + ');
-            document.getElementById('auto-breakdown-text').innerHTML = `
-                <b>Item Dipilih (${canvasItems.length} Item):</b> ${itemNames}<br>
-                <b>Status Kurasi:</b> Papan kolase flat lay berhasil disusun otomatis sesuai gaya pilihanmu!
-            `;
+                // Aksesoris & Pelengkap
+                if (aksesoris.length > 0) {
+                    htmlContent += `<div class="border-top pt-2 w-100 d-flex justify-content-center gap-2 overflow-auto">`;
+                    aksesoris.forEach(acc => {
+                        htmlContent += `<div class="bg-white p-1 rounded shadow-sm border text-center flex-shrink-0" style="width: 55px;">
+                            <img src="${acc.image}" style="width: 45px; height: 45px; object-fit: cover;" class="rounded">
+                        </div>`;
+                    });
+                    htmlContent += `</div>`;
+                }
 
-            document.getElementById('auto-outfit-preview').classList.remove('d-none');
+                flatLayContainer.innerHTML = htmlContent;
+
+                const itemNames = canvasItems.map(i => `${i.title} (${i.categoryLabel})`).join(' + ');
+                document.getElementById('auto-breakdown-text').innerHTML = `
+                    <b>Item Diproses AI (${canvasItems.length} Item):</b> ${itemNames}<br>
+                    <b>Status Hasil:</b> Ilustrasi OOTD berhasil diracik otomatis oleh sistem AI dengan keserasian transisi aktivitas harianmu.
+                `;
+
+                previewState.classList.remove('d-none');
+            }, 800);
         }
 
         function renderWardrobe() {
@@ -951,7 +1068,7 @@
             `).join('');
 
             const canvasNames = canvasItems.length > 0 ? canvasItems.map(i => `${i.title} (${i.categoryLabel})`).join(', ') : 'Belum ada item';
-            const mixText = `Halo Stylist Pantaskan, saya ${currentUser.name} telah meracik otomatisasi setelan transisi outfit utuh di lemari digital saya berisi item: ${canvasNames}. Mohon masukan dan rekomendasi keserasiannya ya!`;
+            const mixText = `Halo Stylist Pantaskan, saya ${currentUser.name} telah meracik rekomendasi AI ilustrasi setelan transisi outfit utuh di lemari digital saya berisi item: ${canvasNames}. Mohon masukan dan rekomendasi keserasiannya ya!`;
             document.getElementById('wa-consult-btn').href = `https://api.whatsapp.com/send?phone=6285290956001&text=${encodeURIComponent(mixText)}`;
         }
 
