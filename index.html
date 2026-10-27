@@ -1,0 +1,965 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pantaskan - Aplikasi Mobile</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --bg-body: #F4F1EA;
+            --bg-card: #FFFFFF;
+            --primary-sage: #5A6952;
+            --primary-sage-hover: #465240;
+            --text-primary: #181A18;
+            --text-muted: #666B66;
+            --accent-shopee: #EE4D2D;
+            --border-color: #D8D2C4;
+            --input-bg: #EAE5DC;
+            --price-green: #2E5829;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-primary);
+            max-width: 440px;
+            margin: 0 auto;
+            min-height: 100vh;
+            position: relative;
+            box-shadow: 0 0 35px rgba(0,0,0,0.12);
+            overflow-x: hidden;
+            padding-bottom: 85px;
+        }
+
+        h1, h2, h3, h4, .brand-heading {
+            font-family: 'Playfair Display', serif;
+        }
+
+        .btn-sage {
+            background-color: var(--primary-sage) !important;
+            color: #FFFFFF !important;
+            font-weight: 700;
+            font-size: 0.88rem;
+            border-radius: 50px;
+            border: none;
+            padding: 12px 20px;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 12px rgba(90, 105, 82, 0.25);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .btn-sage:hover {
+            background-color: var(--primary-sage-hover) !important;
+        }
+
+        .form-input-figma {
+            background-color: var(--input-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 25px;
+            padding: 12px 20px;
+            font-size: 0.85rem;
+            color: var(--text-primary);
+            width: 100%;
+            outline: none;
+        }
+
+        .app-header {
+            background-color: rgba(244, 241, 234, 0.92);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-color);
+            padding: 12px 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1040;
+        }
+
+        .card-custom {
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            background: var(--bg-card);
+            overflow: hidden;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+            position: relative;
+        }
+
+        .img-container {
+            background-color: #EAE5DC;
+            aspect-ratio: 1/1;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .img-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .badge-category {
+            background-color: #EAE5DC;
+            color: var(--text-muted);
+            font-weight: 600;
+            font-size: 0.65rem;
+            padding: 3px 8px;
+            border-radius: 6px;
+            display: inline-block;
+        }
+
+        .product-title {
+            font-weight: 700;
+            font-size: 0.82rem;
+            color: var(--text-primary);
+            line-height: 1.35;
+            margin-bottom: 2px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            min-height: 2.3em;
+        }
+
+        .product-price {
+            color: var(--price-green);
+            font-weight: 700;
+            font-size: 0.85rem;
+            margin-bottom: 8px;
+        }
+
+        .btn-shopee {
+            background-color: var(--accent-shopee);
+            color: white !important;
+            font-weight: 700;
+            border: none;
+            border-radius: 30px;
+            font-size: 0.72rem;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            padding: 7px 10px;
+            width: 100%;
+        }
+
+        .btn-wa-outline {
+            border: 1px solid var(--text-primary);
+            color: var(--text-primary) !important;
+            font-weight: 600;
+            font-size: 0.72rem;
+            border-radius: 30px;
+            background: #FFFFFF;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            padding: 6px 10px;
+            width: 100%;
+        }
+        .btn-wa-outline:hover {
+            background-color: var(--text-primary);
+            color: #FFFFFF !important;
+        }
+
+        .mobile-bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 440px;
+            background: rgba(244, 241, 234, 0.95);
+            backdrop-filter: blur(12px);
+            border-top: 1px solid var(--border-color);
+            z-index: 1050;
+            padding: 10px 0;
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .mobile-nav-item {
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.68rem;
+            text-decoration: none;
+            font-weight: 600;
+            background: none;
+            border: none;
+            cursor: pointer;
+            flex: 1;
+        }
+
+        .mobile-nav-item i {
+            display: block;
+            font-size: 1.2rem;
+            margin-bottom: 2px;
+        }
+
+        .mobile-nav-item.active {
+            color: var(--text-primary);
+        }
+
+        .full-screen-overlay {
+            position: fixed;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 440px;
+            height: 100vh;
+            background-color: var(--bg-body);
+            z-index: 2000;
+            overflow-y: auto;
+            padding: 30px 24px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ONBOARDING SCREEN -->
+    <div id="screen-onboarding" class="full-screen-overlay text-center">
+        <div class="mt-4">
+            <h1 class="brand-heading fw-bold display-4 mb-2" style="color: var(--primary-sage);">P</h1>
+            <h3 class="brand-heading fw-bold fs-3 mb-2">Selamat Datang di Pantaskan</h3>
+            <p class="text-muted small mx-auto" style="max-width: 300px; line-height: 1.6;">
+                Tetap pantas di setiap aktivitas. Temukan kurasi setelan terbaik, simpan ke lemari digital, dan konsultasi gaya gratis.
+            </p>
+        </div>
+        <div class="my-3">
+            <button class="btn-sage w-100 py-3 mb-2" onclick="showScreen('screen-login')">Masuk / Daftar</button>
+            <button class="btn btn-outline-dark w-100 py-2 rounded-pill small fw-semibold" onclick="hideAuthScreens()">Lanjutkan ke Aplikasi</button>
+        </div>
+    </div>
+
+    <!-- LOGIN SCREEN -->
+    <div id="screen-login" class="full-screen-overlay text-center d-none">
+        <div class="mt-3">
+            <h1 class="brand-heading fw-bold display-5 mb-2" style="color: var(--primary-sage);">P</h1>
+            <h4 class="brand-heading fw-bold mb-1">Masuk Akun</h4>
+            <p class="text-muted small mb-4">Masuk untuk menyimpan koleksi lemari digital & rekomendasi personal</p>
+
+            <div class="text-start mb-3">
+                <label class="small text-muted fw-bold mb-1 ms-2">Email</label>
+                <input type="email" class="form-input-figma" placeholder="contoh@email.com" id="login-email">
+            </div>
+            <div class="text-start mb-4">
+                <label class="small text-muted fw-bold mb-1 ms-2">Password</label>
+                <input type="password" class="form-input-figma" placeholder="••••••••">
+            </div>
+            <button class="btn-sage w-100 py-3 mb-2" onclick="handleLogin()">Log In</button>
+        </div>
+        <div class="mb-3">
+            <p class="text-muted small mb-0">Belum punya akun? <a class="fw-bold text-dark cursor-pointer" onclick="alert('Silakan gunakan akun demo atau email apa saja.')">Sign Up</a></p>
+        </div>
+    </div>
+
+    <!-- MAIN APP HEADER -->
+    <div class="app-header">
+        <a class="cursor-pointer text-decoration-none" onclick="switchTab('home')">
+            <span class="brand-heading fw-bold fs-5 text-dark">Pantaskan</span>
+        </a>
+        <div class="d-flex align-items-center gap-2">
+            <button class="btn btn-sm btn-outline-dark rounded-pill px-3 py-1" style="font-size:0.75rem;" onclick="switchTab('wardrobe')">
+                <i class="fa-solid fa-bookmark text-danger me-1"></i> <span id="wishlist-count">0</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- ================= 1. TAB KATALOG / BERANDA ================= -->
+    <div id="page-home" class="app-page p-3">
+        <div class="p-3 bg-white border rounded-4 mb-3 shadow-sm d-flex justify-content-between align-items-center">
+            <div>
+                <h6 class="fw-bold mb-0 brand-heading fs-6">Hai, Sahabat Pantaskan! 👋</h6>
+                <p class="text-muted small mb-0" style="font-size:0.75rem;">Siap tampil rapi dan pantas hari ini?</p>
+            </div>
+            <a href="https://api.whatsapp.com/send?phone=6285290956001&text=Halo%20Stylist%20Pantaskan,%20aku%20mau%20konsultasi%20style!" target="_blank" class="btn btn-sm btn-success rounded-pill px-3 py-1 fw-bold" style="background:#25D366; border:none; font-size:0.75rem;">
+                <i class="fa-brands fa-whatsapp"></i> Stylist
+            </a>
+        </div>
+
+        <div class="mb-3">
+            <span class="text-uppercase fw-bold text-muted d-block mb-2" style="font-size: 0.65rem; letter-spacing: 1px;">Kategori Pilihan</span>
+            <div class="d-flex gap-2 overflow-auto pb-1" style="scrollbar-width: none;">
+                <button class="btn btn-sm btn-dark rounded-pill px-3 py-1 fw-bold activity-btn active" style="font-size: 0.72rem; white-space: nowrap; background: var(--text-primary); border-color: var(--text-primary);" onclick="filterByCategory('Semua', this)">Semua Item</button>
+                <button class="btn btn-sm btn-outline-dark rounded-pill px-3 py-1 activity-btn" style="font-size: 0.72rem; white-space: nowrap;" onclick="filterByCategory('Atasan', this)">Atasan</button>
+                <button class="btn btn-sm btn-outline-dark rounded-pill px-3 py-1 activity-btn" style="font-size: 0.72rem; white-space: nowrap;" onclick="filterByCategory('Bawahan', this)">Bawahan</button>
+                <button class="btn btn-sm btn-outline-dark rounded-pill px-3 py-1 activity-btn" style="font-size: 0.72rem; white-space: nowrap;" onclick="filterByCategory('Outer', this)">Outer</button>
+                <button class="btn btn-sm btn-outline-dark rounded-pill px-3 py-1 activity-btn" style="font-size: 0.72rem; white-space: nowrap;" onclick="filterByCategory('Aksesoris', this)">Aksesoris</button>
+                <button class="btn btn-sm btn-outline-dark rounded-pill px-3 py-1 activity-btn" style="font-size: 0.72rem; white-space: nowrap;" onclick="filterByCategory('Tas', this)">Tas</button>
+                <button class="btn btn-sm btn-outline-dark rounded-pill px-3 py-1 activity-btn" style="font-size: 0.72rem; white-space: nowrap;" onclick="filterByCategory('Alas Kaki', this)">Alas Kaki</button>
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <input type="text" id="search-input" class="form-input-figma" placeholder="🔍 Cari kemeja, celana, tas..." onkeyup="filterProducts()">
+        </div>
+
+        <div class="d-flex justify-content-between align-items-center mb-2">
+            <h6 class="fw-bold mb-0 brand-heading" style="font-size: 0.95rem;">Direktori 100+ Katalog Terkurasi</h6>
+            <span class="text-muted small" style="font-size: 0.72rem;" id="product-count">100 Item</span>
+        </div>
+        <div class="row g-2" id="full-katalog-grid"></div>
+    </div>
+
+    <!-- ================= 2. TAB LOOKBOOK ================= -->
+    <div id="page-lookbook" class="app-page d-none p-3">
+        <div class="text-center mb-3">
+            <span class="text-uppercase fw-bold text-muted small" style="letter-spacing: 1px;">Pusat Inspirasi Pasif</span>
+            <h4 class="fw-bold brand-heading mb-1">Lookbook OOTD Siap Pakai</h4>
+            <p class="text-muted small" style="font-size: 0.75rem;">Pilih setelan utuh racikan Stylist. Klik "Lihat Detail Setelan" untuk rincian item.</p>
+        </div>
+
+        <div class="d-flex gap-2 overflow-auto pb-2 mb-3" style="scrollbar-width: none;">
+            <button class="btn btn-sm btn-dark rounded-pill px-3 py-1 fw-bold style-btn active" style="font-size: 0.72rem; white-space: nowrap; background: var(--text-primary); border-color: var(--text-primary);" onclick="filterLookbook('Semua', this)">Semua Gaya</button>
+            <button class="btn btn-sm btn-outline-dark rounded-pill px-3 py-1 style-btn" style="font-size: 0.72rem; white-space: nowrap;" onclick="filterLookbook('Casual', this)">Casual</button>
+            <button class="btn btn-sm btn-outline-dark rounded-pill px-3 py-1 style-btn" style="font-size: 0.72rem; white-space: nowrap;" onclick="filterLookbook('Korean', this)">Korean Style</button>
+            <button class="btn btn-sm btn-outline-dark rounded-pill px-3 py-1 style-btn" style="font-size: 0.72rem; white-space: nowrap;" onclick="filterLookbook('Formal', this)">Formal / Kerja</button>
+        </div>
+
+        <div class="row g-3" id="lookbook-feed">
+            <div class="col-12 look-card" data-style="Casual">
+                <div class="card-custom p-3">
+                    <div class="img-container rounded-3 mb-3">
+                        <img src="Asset/s8.webp" alt="Sage Casual Transit Look">
+                    </div>
+                    <span class="badge bg-secondary mb-1 align-self-start" style="font-size: 0.65rem;">Agenda: Kuliah & Hangout</span>
+                    <h6 class="fw-bold mb-1">Sage Casual Transit Look</h6>
+                    <p class="text-muted small mb-3" style="font-size: 0.75rem;">Kombinasi kemeja linen ringan dengan celana longgar yang adem dipakai seharian.</p>
+                    <button class="btn-sage btn-sm w-100 py-2 fw-bold" style="font-size: 0.75rem;" onclick="openLookbookDetail('Sage Casual Transit Look', 'Asset/s8.webp', ['Cottongo Kemeja Panjang Linen', 'Loose Pants', 'Tas Selempang Kanvas'], ['https://shopee.co.id/product/54893689/2434711910', 'https://shopee.co.id/product/601605914/20005074766', 'https://s.shopee.co.id/7AeFW9lcdd'])">
+                        <i class="fa-solid fa-list-check me-1"></i> Lihat Detail Setelan & Beli per Item
+                    </button>
+                </div>
+            </div>
+
+            <div class="col-12 look-card" data-style="Formal">
+                <div class="card-custom p-3">
+                    <div class="img-container rounded-3 mb-3">
+                        <img src="Asset/s5.webp" alt="First-Jobber Sharp Look">
+                    </div>
+                    <span class="badge bg-secondary mb-1 align-self-start" style="font-size: 0.65rem;">Agenda: Meeting & First Jobber</span>
+                    <h6 class="fw-bold mb-1">First-Jobber Sharp Look</h6>
+                    <p class="text-muted small mb-3" style="font-size: 0.75rem;">Setelan vest bordir dan celana bahan formal yang rapi dan profesional.</p>
+                    <button class="btn-sage btn-sm w-100 py-2 fw-bold" style="font-size: 0.75rem;" onclick="openLookbookDetail('First-Jobber Sharp Look', 'Asset/s5.webp', ['Luna Bordir Vest', 'Celana Bahan Formal Pria Slimfit', 'SOVELLA Loafers'], ['https://shopee.co.id/product/10432508/42650878662', 'https://shopee.co.id/product/258266328/6594192211', 'https://shopee.co.id/product/424496860/22756984691'])">
+                        <i class="fa-solid fa-list-check me-1"></i> Lihat Detail Setelan & Beli per Item
+                    </button>
+                </div>
+            </div>
+
+            <div class="col-12 look-card" data-style="Korean">
+                <div class="card-custom p-3">
+                    <div class="img-container rounded-3 mb-3">
+                        <img src="Asset/s12.webp" alt="Korean Knitwear Vibe">
+                    </div>
+                    <span class="badge bg-secondary mb-1 align-self-start" style="font-size: 0.65rem;">Agenda: Cafe Date & Hangout</span>
+                    <h6 class="fw-bold mb-1">Korean Knitwear Vibe</h6>
+                    <p class="text-muted small mb-3" style="font-size: 0.75rem;">Sweater rajut gaya Korea dipadu rok denim pendek yang chic dan stylish.</p>
+                    <button class="btn-sage btn-sm w-100 py-2 fw-bold" style="font-size: 0.75rem;" onclick="openLookbookDetail('Korean Knitwear Vibe', 'Asset/s12.webp', ['Korean Knitwear Sweater', 'Rok Denim Wanita Pendek', 'Shoulder Bag Wanita'], ['https://shopee.co.id/product/1338930555/26266681359', 'https://shopee.co.id/product/366055628/22561417709', 'https://s.shopee.co.id/3g4NLcSF1R'])">
+                        <i class="fa-solid fa-list-check me-1"></i> Lihat Detail Setelan & Beli per Item
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= 3. TAB SMART WARDROBE (DENGAN FLAT LAY OOTD GRID GENERATOR) ================= -->
+    <div id="page-wardrobe" class="app-page d-none p-3">
+        <div class="text-center mb-3">
+            <h4 class="fw-bold brand-heading mb-1">Lemari Digital (Smart Wardrobe)</h4>
+            <p class="text-muted small" style="font-size: 0.75rem;">Pilih item dari simpanan, lalu klik tombol untuk meracik papan kolase Flat Lay OOTD secara otomatis!</p>
+        </div>
+
+        <!-- KANVAS MULTI-ITEM -->
+        <div class="p-3 bg-white rounded-4 border mb-3 shadow-sm">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+                <h6 class="fw-bold small mb-0 text-dark"><i class="fa-solid fa-wand-magic-sparkles text-success me-1"></i> Kanvas Setelan Utuh (<span id="canvas-count">0</span> Item)</h6>
+                <button class="btn btn-xs btn-outline-danger py-0 px-2" style="font-size: 0.65rem;" onclick="clearCanvas()">Kosongkan</button>
+            </div>
+            <p class="text-muted small mb-2" style="font-size: 0.68rem;">Tekan "➕ Tambah ke Kanvas" pada item simpanan di bawah:</p>
+            
+            <div id="canvas-items-grid" class="row g-2 align-items-center justify-content-start bg-light p-2 rounded-3 border" style="min-height: 110px;">
+                <div class="col-12 text-center text-muted small py-3" style="font-size: 0.7rem;">
+                    Belum ada item di kanvas. Pilih item Atasan, Bawahan, Outer, Tas, atau Alas Kaki dari bawah!
+                </div>
+            </div>
+
+            <!-- TOMBOL LIHAT FLAT LAY OOTD -->
+            <div class="mt-3">
+                <button class="btn btn-sage w-100 py-2 fw-bold shadow-sm" style="font-size: 0.78rem;" onclick="generateInstantTransit()">
+                    <i class="fa-solid id-card me-1"></i> Ohh Jadinya Kalo Dipake Gini Nihh! (Lihat Flat Lay OOTD)
+                </button>
+            </div>
+
+            <!-- KOTAK PREVIEW FLAT LAY OOTD GRID (ALA PINTEREST) -->
+            <div id="auto-outfit-preview" class="mt-3 p-3 bg-white rounded-4 border border-success shadow-sm d-none">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <span class="badge bg-success fw-bold" style="font-size: 0.68rem;">✨ Papan Kolase Flat Lay OOTD Kamu</span>
+                    <span class="fw-bold text-dark small fs-6" id="auto-total-price">Rp0</span>
+                </div>
+                
+                <!-- AREA GRID FLAT LAY ESTETIK -->
+                <div id="flat-lay-container" class="p-3 rounded-3 mb-3 border shadow-sm position-relative d-flex flex-column align-items-center justify-content-center gap-2" style="background: #FAF8F5; min-height: 280px;">
+                    <!-- Diisi otomatis via JS berdasarkan item pilihan user -->
+                </div>
+
+                <div class="bg-success-subtle p-2 rounded-2 border border-success" style="font-size: 0.72rem;">
+                    <p class="fw-bold text-dark mb-1"><i class="fa-solid fa-check-circle text-success me-1"></i> Kurasi Gaya Otomatis:</p>
+                    <p class="text-muted mb-0" id="auto-breakdown-text">Papan gaya tersusun estetik sesuai item yang kamu pilih di kanvas.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="d-flex gap-1 overflow-auto pb-2 mb-2" style="scrollbar-width: none;">
+            <button class="btn btn-xs btn-dark rounded-pill px-2 py-1 wardrobe-filter active" style="font-size:0.68rem; background: var(--text-primary);" onclick="filterWardrobe('Semua', this)">Semua Simpanan</button>
+            <button class="btn btn-xs btn-outline-dark rounded-pill px-2 py-1 wardrobe-filter" style="font-size:0.68rem;" onclick="filterWardrobe('Atasan', this)">Atasan</button>
+            <button class="btn btn-xs btn-outline-dark rounded-pill px-2 py-1 wardrobe-filter" style="font-size:0.68rem;" onclick="filterWardrobe('Bawahan', this)">Bawahan</button>
+            <button class="btn btn-xs btn-outline-dark rounded-pill px-2 py-1 wardrobe-filter" style="font-size:0.68rem;" onclick="filterWardrobe('Outer', this)">Outer</button>
+            <button class="btn btn-xs btn-outline-dark rounded-pill px-2 py-1 wardrobe-filter" style="font-size:0.68rem;" onclick="filterWardrobe('Aksesoris', this)">Lainnya</button>
+        </div>
+
+        <div id="wardrobe-empty-state" class="text-center py-4 text-muted small bg-white rounded-4 border p-3">
+            <i class="fa-solid fa-bookmark fs-3 mb-2 text-secondary d-block"></i>
+            Lemari digitalmu masih kosong. Silakan buka tab <strong>Katalog</strong> dan tandai item yang kamu sukai dengan ikon bookmark!
+        </div>
+
+        <div class="row g-2" id="wardrobe-items-container"></div>
+
+        <div class="mt-3" id="wardrobe-actions" style="display:none !important;">
+            <a href="#" id="wa-consult-btn" target="_blank" rel="noopener noreferrer" class="btn btn-success w-100 py-2 rounded-pill fw-bold shadow-sm" style="background-color: #25D366; border:none; font-size: 0.8rem;">
+                <i class="fa-brands fa-whatsapp me-2"></i> Mau Konsultasi Lebih Lanjut ke Stylist WA?
+            </a>
+        </div>
+    </div>
+
+    <!-- ================= 4. TAB PROFILE ================= -->
+    <div id="page-profile" class="app-page d-none p-3">
+        <div class="p-4 rounded-4 bg-white border shadow-sm text-center mb-3">
+            <div class="mx-auto mb-2 rounded-circle bg-light d-flex align-items-center justify-content-center" style="width: 60px; height: 60px; font-size: 1.5rem; color: var(--primary-sage);">
+                <i class="fa-solid fa-user"></i>
+            </div>
+            <h5 class="fw-bold mb-0 brand-heading" id="profile-name">Veroo</h5>
+            <p class="text-muted small mb-2" style="font-size: 0.75rem;" id="profile-email">veroomikaaajn@gmail.com</p>
+            <span class="badge text-white px-3 py-1 rounded-pill" style="font-size: 0.65rem; background-color: var(--primary-sage);">Member Aktif Pantaskan</span>
+        </div>
+
+        <div class="list-group shadow-sm rounded-4 overflow-hidden border mb-3" style="font-size: 0.82rem;">
+            <a href="#" onclick="openProfileModal('Style & Activity Preference', 'Atur kembali preferensi gaya dan agenda harianmu untuk memperbarui rekomendasi katalog:<br><br><b>Pilihan Style:</b> Minimalist, Casual, Korean, Streetwear, Formal, Vintage<br><b>Pilihan Agenda:</b> Kuliah, Kerja/Magang, Hangout, Meeting, Traveling')" class="list-group-item list-group-item-action py-3 d-flex justify-content-between align-items-center">
+                <span><i class="fa-solid fa-sliders text-muted me-2"></i> Style & Activity Preference</span>
+                <i class="fa-solid fa-chevron-right text-muted small"></i>
+            </a>
+            <a href="#" onclick="openProfileModal('Notifikasi OOTD Harian', 'Atur pengingat push notification agar kamu tidak ketinggalan inspirasi setelan harian:<br><br><input type=\'checkbox\' checked> Aktifkan Pengingat Pagi (Jam 07:00 WIB)<br><input type=\'checkbox\' checked> Rekomendasi Transisi Agenda')" class="list-group-item list-group-item-action py-3 d-flex justify-content-between align-items-center">
+                <span><i class="fa-solid fa-bell text-muted me-2"></i> Notifikasi OOTD Harian</span>
+                <i class="fa-solid fa-chevron-right text-muted small"></i>
+            </a>
+            <a href="#" onclick="openProfileModal('Pusat Bantuan & FAQ', '<b>1. Cara Belanja:</b> Klik tombol Beli Shopee pada produk katalog atau lookbook untuk diarahkan langsung ke Official Store.<br><br><b>2. Cara Konsultasi:</b> Tekan tombol Tanya Stylist untuk terhubung otomatis dengan WhatsApp Personal Stylist kami.<br><br><b>3. Panduan Ukuran (Size Guide):</b> Tersedia standar ukuran S, M, L, XL pada rincian toko.')" class="list-group-item list-group-item-action py-3 d-flex justify-content-between align-items-center">
+                <span><i class="fa-solid fa-circle-question text-muted me-2"></i> Pusat Bantuan & FAQ</span>
+                <i class="fa-solid fa-chevron-right text-muted small"></i>
+            </a>
+            <a href="https://api.whatsapp.com/send?phone=6285290956001&text=Halo%20Stylist%20Pantaskan,%20saya%20Veroo.%20Saya%20mau%20konsultasi%20padu%20padan%20outfit%20untuk%20agenda%20kuliah." target="_blank" rel="noopener noreferrer" class="list-group-item list-group-item-action py-3 d-flex justify-content-between align-items-center">
+                <span><i class="fa-brands fa-whatsapp text-success me-2"></i> Hubungi Stylist Personal WA</span>
+                <i class="fa-solid fa-chevron-right text-muted small"></i>
+            </a>
+            <a href="#" onclick="confirmLogout()" class="list-group-item list-group-item-action py-3 d-flex justify-content-between align-items-center text-danger">
+                <span><i class="fa-solid fa-right-from-bracket me-2"></i> Keluar Akun (Log Out)</span>
+                <i class="fa-solid fa-chevron-right text-muted small"></i>
+            </a>
+        </div>
+    </div>
+
+    <!-- MODAL DETAIL LOOKBOOK -->
+    <div class="modal fade" id="lookbookModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content rounded-4 p-3 bg-white">
+                <div class="modal-header border-0 pb-0">
+                    <h5 class="modal-title fw-bold brand-heading fs-5" id="modal-look-title">Detail Setelan</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <img id="modal-look-img" src="" alt="Look" class="w-100 rounded-3 mb-3" style="aspect-ratio:1/1; object-fit:cover;">
+                    <p class="text-muted small mb-2 fw-bold">Rincian Item Penyusun & Pautan Beli:</p>
+                    <div id="modal-look-items" class="d-flex flex-column gap-2 mb-3"></div>
+                </div>
+                <div class="modal-footer border-0 pt-0">
+                    <a id="modal-look-all-shopee" href="#" target="_blank" class="btn-shopee py-2 w-100">Beli Satu Set Lengkap di Shopee</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL PROFILE DETAIL -->
+    <div class="modal fade" id="profileModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content rounded-4 p-4 bg-white">
+                <h5 class="fw-bold brand-heading mb-3" id="prof-modal-title">Pengaturan</h5>
+                <p class="text-muted small mb-4" id="prof-modal-body" style="line-height: 1.6;"></p>
+                <button type="button" class="btn-sage w-100 py-2" data-bs-dismiss="modal">Tutup</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- BOTTOM APP NAVIGATION -->
+    <div class="mobile-bottom-nav">
+        <button class="mobile-nav-item active" id="mob-nav-home" onclick="switchTab('home')">
+            <i class="fa-solid fa-border-all"></i> Katalog
+        </button>
+        <button class="mobile-nav-item" id="mob-nav-lookbook" onclick="switchTab('lookbook')">
+            <i class="fa-solid fa-shirt"></i> Lookbook
+        </button>
+        <button class="mobile-nav-item" id="mob-nav-wardrobe" onclick="switchTab('wardrobe')">
+            <i class="fa-solid fa-bookmark"></i> Lemari
+        </button>
+        <button class="mobile-nav-item" id="mob-nav-profile" onclick="switchTab('profile')">
+            <i class="fa-solid fa-user"></i> Profile
+        </button>
+    </div>
+
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        /* 1. DATA PRODUK KATALOG 100 ITEM */
+        const productTemplates = [
+            { title: "Ribbon Top y2k", cat: "Atasan", price: "Rp68.553", img: "Asset/s2.webp", link: "https://shopee.co.id/product/342004426/27450229762?channel_code=MyCollection" },
+            { title: "Sweater Rajut Wanita", cat: "Atasan", price: "Rp59.509", img: "Asset/s104.webp", link: "https://s.shopee.co.id/3LRYAr14KO?share_channel_code=1" },
+            { title: "Kaos Pria Strip Two Lane", cat: "Atasan", price: "Rp52.500", img: "Asset/s136.webp", link: "https://s.shopee.co.id/9APieW50wC?share_channel_code=1" },
+            { title: "Kemeja Katun Loose Fit", cat: "Atasan", price: "Rp119.000", img: "Asset/s6.webp", link: "https://shopee.co.id/product/542683911/18578137335?channel_code=MyCollection" },
+            { title: "Hoodie", cat: "Atasan", price: "Rp99.750", img: "Asset/s7.webp", link: "https://shopee.co.id/product/285244527/19308033208?channel_code=MyCollection" },
+            { title: "Cottongo Kemeja Panjang Pria Linen", cat: "Atasan", price: "Rp179.000", img: "Asset/s8.webp", link: "https://shopee.co.id/product/54893689/2434711910?channel_code=MyCollection" },
+            { title: "Kemeja Stripe Oversize Pria Lengan Panjang", cat: "Atasan", price: "Rp115.000", img: "Asset/s9.webp", link: "https://shopee.co.id/product/951799285/26404265624?channel_code=MyCollection" },
+            { title: "DENIM OVERSIZED SHIRT", cat: "Atasan", price: "Rp199.900", img: "Asset/s10.webp", link: "https://shopee.co.id/product/988805007/27655337699?channel_code=MyCollection" },
+            { title: "Crop Top Basic Casual", cat: "Atasan", price: "Rp37.685", img: "Asset/s11.webp", link: "https://shopee.co.id/product/804537324/11197918826?channel_code=MyCollection" },
+            { title: "Korean Knitwear Sweater", cat: "Atasan", price: "Rp147.000", img: "Asset/s12.webp", link: "https://shopee.co.id/product/1338930555/26266681359?channel_code=MyCollection" },
+            { title: "Tanktop Ribbed Knit", cat: "Atasan", price: "Rp45.000", img: "Asset/s13.webp", link: "https://shopee.co.id/product/797769650/26204691436?channel_code=MyCollection" },
+            { title: "DENIM KEMEJA", cat: "Atasan", price: "Rp94.900", img: "Asset/s23.webp", link: "https://shopee.co.id/product/702276586/41506367500?channel_code=MyCollection" },
+            { title: "Rok Denim Wanita Pendek", cat: "Bawahan", price: "Rp124.224", img: "Asset/s14.webp", link: "https://shopee.co.id/product/366055628/22561417709?channel_code=MyCollection" },
+            { title: "Celana Jeans Wanita Highwaist", cat: "Bawahan", price: "Rp79.900", img: "Asset/s15.webp", link: "https://shopee.co.id/product/159716084/43252230818?channel_code=MyCollection" },
+            { title: "Celana Jeans Pria Loose Pants", cat: "Bawahan", price: "Rp105.300", img: "Asset/s16.webp", link: "https://shopee.co.id/product/1140201971/43550787021?channel_code=MyCollection" },
+            { title: "Loose Pants", cat: "Bawahan", price: "Rp110.569", img: "Asset/s19.webp", link: "https://shopee.co.id/product/601605914/20005074766?channel_code=MyCollection" },
+            { title: "Vest Knit", cat: "Outer", price: "Rp71.980", img: "Asset/s58.webp", link: "https://s.shopee.co.id/7KxZI0u8iA?share_channel_code=1" },
+            { title: "Luna Bordir Vest", cat: "Outer", price: "Rp114.900", img: "Asset/s5.webp", link: "https://shopee.co.id/product/10432508/42650878662?channel_code=MyCollection" },
+            { title: "Tas Selempang Wanita", cat: "Tas", price: "Rp37.900", img: "Asset/s77.webp", link: "https://s.shopee.co.id/8V9csree0M?share_channel_code=1" },
+            { title: "SOVELLA Loafers", cat: "Alas Kaki", price: "Rp195.000", img: "Asset/s71.webp", link: "https://shopee.co.id/product/424496860/22756984691?channel_code=MyCollection" }
+        ];
+        
+        const productsData = [];
+        for (let i = 1; i <= 100; i++) {
+            const template = productTemplates[(i - 1) % productTemplates.length];
+            let catLabel = i <= 25 ? "Atasan" : (i <= 50 ? "Bawahan" : (i <= 65 ? "Outer" : (i <= 75 ? "Aksesoris" : (i <= 88 ? "Tas" : "Alas Kaki"))));
+            let titleStr = i <= productTemplates.length ? template.title : `${template.title} Vol. ${Math.ceil(i / productTemplates.length)}`;
+            let waText = `Halo Stylist Pantaskan, saya tertarik untuk membeli produk '${titleStr}' seharga ${template.price}.`;
+
+            productsData.push({
+                id: i,
+                title: titleStr,
+                categoryLabel: catLabel,
+                price: template.price,
+                image: template.img,
+                shopeeUrl: template.link,
+                waMessage: encodeURIComponent(waText)
+            });
+        }
+
+        let currentUser = JSON.parse(localStorage.getItem('pantaskan_user')) || { name: 'Veroo', email: 'veroomikaaajn@gmail.com' };
+        let wishlist = JSON.parse(localStorage.getItem('pantaskan_wishlist')) || [];
+        let currentWardrobeFilter = 'Semua';
+        let canvasItems = JSON.parse(localStorage.getItem('pantaskan_canvas')) || [];
+
+        function renderProducts(data, containerId = "full-katalog-grid") {
+            const grid = document.getElementById(containerId);
+            if (!grid) return;
+
+            if (data.length === 0) {
+                grid.innerHTML = `<div class="col-12 text-center text-muted py-4 small">Produk tidak ditemukan.</div>`;
+                return;
+            }
+
+            document.getElementById('product-count').innerText = `${data.length} Item`;
+
+            grid.innerHTML = data.map(p => {
+                const isSaved = wishlist.includes(p.id);
+                return `
+                    <div class="col-6">
+                        <div class="card-custom">
+                            <button class="btn btn-sm position-absolute top-0 start-0 m-2 rounded-circle shadow-sm ${isSaved ? 'btn-dark' : 'btn-light'}" style="width: 28px; height: 28px; z-index:2;" onclick="toggleBookmark(${p.id})" title="Simpan">
+                                <i class="fa-solid fa-bookmark ${isSaved ? 'text-white' : 'text-danger'}" style="font-size:0.75rem;"></i>
+                            </button>
+                            <div class="img-container">
+                                <span class="position-absolute top-0 end-0 m-2 badge bg-danger" style="font-size:0.55rem; z-index:2;">Shopee</span>
+                                <img src="${p.image}" alt="${p.title}" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=500&auto=format&fit=crop&q=60'">
+                            </div>
+                            <div class="p-2 d-flex flex-column flex-grow-1 justify-content-between">
+                                <div>
+                                    <div class="mb-1"><span class="badge-category">${p.categoryLabel}</span></div>
+                                    <h6 class="product-title">${p.title}</h6>
+                                    <div class="product-price">${p.price}</div>
+                                </div>
+                                <div class="d-flex flex-column gap-1 mt-auto">
+                                    <a href="${p.shopeeUrl}" target="_blank" rel="noopener noreferrer" class="btn-shopee">
+                                        <i class="fa-solid fa-cart-shopping"></i> Beli Shopee
+                                    </a>
+                                    <a href="https://api.whatsapp.com/send?phone=6285290956001&text=${p.waMessage}" target="_blank" rel="noopener noreferrer" class="btn-wa-outline">
+                                        <i class="fa-brands fa-whatsapp text-success"></i> Tanya Stylist
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join("");
+        }
+
+        function showScreen(screenId) {
+            document.querySelectorAll('.full-screen-overlay').forEach(el => el.classList.add('d-none'));
+            const target = document.getElementById(screenId);
+            if (target) target.classList.remove('d-none');
+        }
+
+        function hideAuthScreens() {
+            document.querySelectorAll('.full-screen-overlay').forEach(el => el.classList.add('d-none'));
+        }
+
+        function handleLogin() {
+            const emailInput = document.getElementById('login-email').value;
+            if(emailInput) {
+                currentUser.email = emailInput;
+                currentUser.name = emailInput.split('@')[0];
+                localStorage.setItem('pantaskan_user', JSON.stringify(currentUser));
+                updateProfileUI();
+            }
+            hideAuthScreens();
+        }
+
+        function updateProfileUI() {
+            document.getElementById('profile-name').innerText = currentUser.name;
+            document.getElementById('profile-email').innerText = currentUser.email;
+        }
+
+        function switchTab(pageId) {
+            ['home', 'lookbook', 'wardrobe', 'profile'].forEach(p => {
+                const pageEl = document.getElementById(`page-${p}`);
+                const mobNavEl = document.getElementById(`mob-nav-${p}`);
+                
+                if (pageEl) {
+                    if (p === pageId) pageEl.classList.remove('d-none');
+                    else pageEl.classList.add('d-none');
+                }
+                if (mobNavEl) {
+                    if (p === pageId) mobNavEl.classList.add('active');
+                    else mobNavEl.classList.remove('active');
+                }
+            });
+
+            if (pageId === 'wardrobe') renderWardrobe();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        let currentCategory = 'Semua';
+        function filterByCategory(cat, btn) {
+            document.querySelectorAll(".activity-btn").forEach(b => {
+                b.classList.remove("btn-dark", "active", "fw-bold");
+                b.style.background = "";
+                b.style.borderColor = "";
+                b.classList.add("btn-outline-dark");
+            });
+            btn.classList.remove("btn-outline-dark");
+            btn.classList.add("btn-dark", "active", "fw-bold");
+            btn.style.background = "var(--text-primary)";
+            btn.style.borderColor = "var(--text-primary)";
+
+            currentCategory = cat;
+            filterProducts();
+        }
+
+        function filterProducts() {
+            const query = document.getElementById('search-input').value.toLowerCase();
+            const filtered = productsData.filter(p => {
+                const matchCat = currentCategory === 'Semua' || p.categoryLabel === currentCategory;
+                const matchQuery = p.title.toLowerCase().includes(query) || p.categoryLabel.toLowerCase().includes(query);
+                return matchCat && matchQuery;
+            });
+            renderProducts(filtered, 'full-katalog-grid');
+        }
+
+        function filterLookbook(style, btn) {
+            document.querySelectorAll(".style-btn").forEach(b => {
+                b.classList.remove("btn-dark", "active", "fw-bold");
+                b.style.background = "";
+                b.style.borderColor = "";
+                b.classList.add("btn-outline-dark");
+            });
+            btn.classList.remove("btn-outline-dark");
+            btn.classList.add("btn-dark", "active", "fw-bold");
+            btn.style.background = "var(--text-primary)";
+            btn.style.borderColor = "var(--text-primary)";
+
+            document.querySelectorAll(".look-card").forEach(card => {
+                if (style === 'Semua' || card.getAttribute('data-style') === style) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        function openLookbookDetail(title, imgUrl, itemsArray, linksArray) {
+            document.getElementById('modal-look-title').innerText = title;
+            document.getElementById('modal-look-img').src = imgUrl;
+            
+            const container = document.getElementById('modal-look-items');
+            container.innerHTML = itemsArray.map((item, idx) => `
+                <div class="p-2 bg-light rounded-3 border d-flex justify-content-between align-items-center" style="font-size:0.75rem;">
+                    <span>${item}</span>
+                    <div class="d-flex gap-1">
+                        <a href="${linksArray[idx] || linksArray[0]}" target="_blank" class="btn btn-xs btn-danger px-2 py-1 text-white" style="font-size:0.65rem; text-decoration:none;">Beli</a>
+                    </div>
+                </div>
+            `).join('');
+
+            document.getElementById('modal-look-all-shopee').href = linksArray[0];
+            new bootstrap.Modal(document.getElementById('lookbookModal')).show();
+        }
+
+        function openProfileModal(title, bodyHtml) {
+            document.getElementById('prof-modal-title').innerText = title;
+            document.getElementById('prof-modal-body').innerHTML = bodyHtml;
+            new bootstrap.Modal(document.getElementById('profileModal')).show();
+        }
+
+        function confirmLogout() {
+            if (confirm("Apakah kamu yakin ingin keluar dari akun Pantaskan?")) {
+                showScreen('screen-onboarding');
+            }
+        }
+
+        function toggleBookmark(id) {
+            const index = wishlist.indexOf(id);
+            if (index > -1) {
+                wishlist.splice(index, 1);
+                canvasItems = canvasItems.filter(item => item.id !== id);
+            } else {
+                wishlist.push(id);
+            }
+            
+            localStorage.setItem('pantaskan_wishlist', JSON.stringify(wishlist));
+            localStorage.setItem('pantaskan_canvas', JSON.stringify(canvasItems));
+            document.getElementById('wishlist-count').innerText = wishlist.length;
+
+            filterProducts();
+            if (!document.getElementById('page-wardrobe').classList.contains('d-none')) {
+                renderWardrobe();
+            }
+        }
+
+        function filterWardrobe(cat, btn) {
+            document.querySelectorAll(".wardrobe-filter").forEach(b => {
+                b.classList.remove("btn-dark", "active", "fw-bold");
+                b.style.background = "";
+                b.classList.add("btn-outline-dark");
+            });
+            btn.classList.remove("btn-outline-dark");
+            btn.classList.add("btn-dark", "active", "fw-bold");
+            btn.style.background = "var(--text-primary)";
+
+            currentWardrobeFilter = cat;
+            renderWardrobe();
+        }
+
+        function addToCanvas(id) {
+            const product = productsData.find(p => p.id === id);
+            if (!product) return;
+
+            if (!canvasItems.some(item => item.id === id)) {
+                canvasItems.push(product);
+                localStorage.setItem('pantaskan_canvas', JSON.stringify(canvasItems));
+            }
+            renderWardrobe();
+        }
+
+        function removeFromCanvas(id) {
+            canvasItems = canvasItems.filter(item => item.id !== id);
+            localStorage.setItem('pantaskan_canvas', JSON.stringify(canvasItems));
+            renderWardrobe();
+        }
+
+        function clearCanvas() {
+            canvasItems = [];
+            localStorage.setItem('pantaskan_canvas', JSON.stringify(canvasItems));
+            renderWardrobe();
+            document.getElementById('auto-outfit-preview').classList.add('d-none');
+        }
+
+        /* FUNGSI DYNAMIC FLAT LAY OOTD GRID GENERATOR (ALA PINTEREST) */
+        function generateInstantTransit() {
+            if (canvasItems.length === 0) {
+                alert("Silakan tambahkan minimal 1 item ke kanvas terlebih dahulu!");
+                return;
+            }
+
+            let totalPriceNum = 0;
+            canvasItems.forEach(i => {
+                const priceVal = parseInt(i.price.replace(/[^0-9]/g, '')) || 0;
+                totalPriceNum += priceVal;
+            });
+
+            document.getElementById('auto-total-price').innerText = `Total: Rp${totalPriceNum.toLocaleString('id-ID')}`;
+            
+            const flatLayContainer = document.getElementById('flat-lay-container');
+            
+            // Kelompokkan item berdasarkan kategori yang dipilih user
+            const atasan = canvasItems.filter(i => i.categoryLabel === 'Atasan');
+            const bawahan = canvasItems.filter(i => i.categoryLabel === 'Bawahan');
+            const outer = canvasItems.filter(i => i.categoryLabel === 'Outer');
+            const aksesoris = canvasItems.filter(i => ['Aksesoris', 'Tas', 'Alas Kaki'].includes(i.categoryLabel));
+
+            // Render papan kolase flat lay estetik otomatis sesuai item pilihan user
+            let htmlContent = `<div class="w-100 text-center text-muted small mb-1 fw-bold" style="font-size: 0.65rem; letter-spacing: 1px; text-transform: uppercase;">✦ Custom OOTD Moodboard ✦</div>`;
+            
+            // Outer / Atasan Utama di tengah
+            if (outer.length > 0) {
+                htmlContent += `<div class="d-flex justify-content-center gap-2 mb-1">`;
+                outer.forEach(o => htmlContent += `<div class="bg-white p-1 rounded shadow-sm" style="width: 80px; height: 80px;"><img src="${o.image}" style="width:100%; height:100%; object-fit:cover;" class="rounded"></div>`);
+                htmlContent += `</div>`;
+            }
+
+            htmlContent += `<div class="d-flex justify-content-center align-items-center gap-2 mb-1 flex-wrap">`;
+            atasan.forEach(a => {
+                htmlContent += `<div class="bg-white p-1 rounded shadow-sm text-center" style="width: 90px;">
+                    <img src="${a.image}" style="width: 100%; height: 75px; object-fit: cover;" class="rounded mb-1">
+                    <span class="d-block text-truncate" style="font-size: 0.55rem; font-weight:700;">${a.title}</span>
+                </div>`;
+            });
+            htmlContent += `</div>`;
+
+            // Bawahan
+            htmlContent += `<div class="d-flex justify-content-center align-items-center gap-2 mb-2 flex-wrap">`;
+            bawahan.forEach(b => {
+                htmlContent += `<div class="bg-white p-1 rounded shadow-sm text-center" style="width: 110px;">
+                    <img src="${b.image}" style="width: 100%; height: 85px; object-fit: cover;" class="rounded mb-1">
+                    <span class="d-block text-truncate" style="font-size: 0.55rem; font-weight:700;">${b.title}</span>
+                </div>`;
+            });
+            htmlContent += `</div>`;
+
+            // Aksesoris & Tas & Alas Kaki di sekelilingnya
+            if (aksesoris.length > 0) {
+                htmlContent += `<div class="border-top pt-2 w-100 d-flex justify-content-center gap-2 overflow-auto">`;
+                aksesoris.forEach(acc => {
+                    htmlContent += `<div class="bg-white p-1 rounded shadow-sm text-center flex-shrink-0" style="width: 55px;">
+                        <img src="${acc.image}" style="width: 45px; height: 45px; object-fit: cover;" class="rounded">
+                    </div>`;
+                });
+                htmlContent += `</div>`;
+            }
+
+            flatLayContainer.innerHTML = htmlContent;
+
+            const itemNames = canvasItems.map(i => `${i.title} (${i.categoryLabel})`).join(' + ');
+            document.getElementById('auto-breakdown-text').innerHTML = `
+                <b>Item Dipilih (${canvasItems.length} Item):</b> ${itemNames}<br>
+                <b>Status Kurasi:</b> Papan kolase flat lay berhasil disusun otomatis sesuai gaya pilihanmu!
+            `;
+
+            document.getElementById('auto-outfit-preview').classList.remove('d-none');
+        }
+
+        function renderWardrobe() {
+            const container = document.getElementById('wardrobe-items-container');
+            const emptyState = document.getElementById('wardrobe-empty-state');
+            const actions = document.getElementById('wardrobe-actions');
+            const canvasGrid = document.getElementById('canvas-items-grid');
+            const canvasCount = document.getElementById('canvas-count');
+
+            canvasCount.innerText = canvasItems.length;
+
+            if (canvasItems.length === 0) {
+                canvasGrid.innerHTML = `
+                    <div class="col-12 text-center text-muted small py-3" style="font-size: 0.7rem;">
+                        Belum ada item di kanvas. Pilih item Atasan, Bawahan, Outer, Tas, atau Alas Kaki dari bawah!
+                    </div>
+                `;
+            } else {
+                canvasGrid.innerHTML = canvasItems.map(item => `
+                    <div class="col-3 text-center position-relative">
+                        <div class="bg-white p-1 rounded-3 border shadow-sm position-relative">
+                            <button onclick="removeFromCanvas(${item.id})" class="btn btn-danger btn-xs position-absolute top-0 end-0 rounded-circle" style="width:16px; height:16px; font-size:8px; padding:0; display:flex; align-items:center; justify-content:center; transform: translate(3px, -3px);">×</button>
+                            <img src="${item.image}" style="height:48px; width:100%; object-fit:cover;" class="mb-1 rounded" onerror="this.src='https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=500&auto=format&fit=crop&q=60'">
+                            <span style="font-size:0.55rem; font-weight:700;" class="text-truncate d-block">${item.title}</span>
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            if (wishlist.length === 0) {
+                emptyState.style.display = 'block';
+                container.innerHTML = '';
+                actions.style.display = 'none';
+                return;
+            }
+
+            emptyState.style.display = 'none';
+            actions.style.display = 'block';
+
+            let savedProducts = productsData.filter(p => wishlist.includes(p.id));
+            if (currentWardrobeFilter !== 'Semua') {
+                if (currentWardrobeFilter === 'Aksesoris') {
+                    savedProducts = savedProducts.filter(p => ['Aksesoris', 'Tas', 'Alas Kaki'].includes(p.categoryLabel));
+                } else {
+                    savedProducts = savedProducts.filter(p => p.categoryLabel === currentWardrobeFilter);
+                }
+            }
+
+            if (savedProducts.length === 0) {
+                container.innerHTML = `<div class="col-12 text-center text-muted py-3 small">Tidak ada item dalam kategori ini.</div>`;
+                return;
+            }
+
+            container.innerHTML = savedProducts.map(p => `
+                <div class="col-6">
+                    <div class="card-custom">
+                        <div class="img-container">
+                            <img src="${p.image}" alt="${p.title}" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=500&auto=format&fit=crop&q=60'">
+                        </div>
+                        <div class="p-2">
+                            <span class="badge-category mb-1">${p.categoryLabel}</span>
+                            <h6 class="product-title">${p.title}</h6>
+                            <div class="product-price">${p.price}</div>
+                            <div class="d-flex flex-column gap-1 mt-2">
+                                <button class="btn btn-sm btn-dark rounded-pill py-1 text-white" style="font-size:0.68rem; background:var(--text-primary); border:none;" onclick="addToCanvas(${p.id})">➕ Tambah ke Kanvas</button>
+                                <a href="${p.shopeeUrl}" target="_blank" rel="noopener noreferrer" class="btn-shopee py-1" style="font-size:0.68rem;">Checkout Shopee</a>
+                                <button class="btn btn-outline-danger btn-sm rounded-pill py-0" style="font-size:0.65rem;" onclick="toggleBookmark(${p.id})">Hapus</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+
+            const canvasNames = canvasItems.length > 0 ? canvasItems.map(i => `${i.title} (${i.categoryLabel})`).join(', ') : 'Belum ada item';
+            const mixText = `Halo Stylist Pantaskan, saya ${currentUser.name} telah meracik otomatisasi setelan transisi outfit utuh di lemari digital saya berisi item: ${canvasNames}. Mohon masukan dan rekomendasi keserasiannya ya!`;
+            document.getElementById('wa-consult-btn').href = `https://api.whatsapp.com/send?phone=6285290956001&text=${encodeURIComponent(mixText)}`;
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            renderProducts(productsData, 'full-katalog-grid');
+            document.getElementById('wishlist-count').innerText = wishlist.length;
+            updateProfileUI();
+        });
+    </script>
+</body>
+</html>
