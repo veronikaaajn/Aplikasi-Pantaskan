@@ -110,6 +110,33 @@
             object-fit: cover;
         }
 
+        /* Pinterest Style Card Lookbook Grid */
+        .pinterest-pin {
+            background: var(--bg-card);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+            border: 1px solid var(--border-color);
+            margin-bottom: 12px;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+        .pinterest-pin:hover {
+            transform: translateY(-3px);
+        }
+        .pin-img-box {
+            width: 100%;
+            aspect-ratio: 3/4;
+            background: #EAE5DC;
+            overflow: hidden;
+            position: relative;
+        }
+        .pin-img-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
         .badge-category {
             background-color: #EAE5DC;
             color: var(--text-muted);
@@ -231,7 +258,6 @@
             justify-content: space-between;
         }
 
-        /* AI Generation Pulse Styling */
         .ai-pulse-glow {
             animation: pulseGlow 1.5s infinite ease-in-out;
         }
@@ -322,81 +348,148 @@
             <input type="text" id="search-input" class="form-input-figma" placeholder="🔍 Cari kemeja, celana, tas..." onkeyup="filterProducts()">
         </div>
 
-        <div class="d-flex justify-content-between align-items-center mb-2">
-            <h6 class="fw-bold mb-0 brand-heading" style="font-size: 0.95rem;">Direktori 100+ Katalog Terkurasi</h6>
-            <span class="text-muted small" style="font-size: 0.72rem;" id="product-count">100 Item</span>
-        </div>
         <div class="row g-2" id="full-katalog-grid"></div>
     </div>
 
-    <!-- ================= 2. TAB LOOKBOOK ================= -->
+    <!-- ================= 2. TAB LOOKBOOK (PINTEREST BOARD STYLE 10 POST OOTD FULL) ================= -->
     <div id="page-lookbook" class="app-page d-none p-3">
         <div class="text-center mb-3">
             <span class="text-uppercase fw-bold text-muted small" style="letter-spacing: 1px;">Pusat Inspirasi Pasif</span>
-            <h4 class="fw-bold brand-heading mb-1">Lookbook OOTD Siap Pakai</h4>
-            <p class="text-muted small" style="font-size: 0.75rem;">Pilih setelan utuh racikan Stylist. Klik "Lihat Detail Setelan" untuk rincian item.</p>
+            <h4 class="fw-bold brand-heading mb-1">Lookbook OOTD Feed</h4>
+            <p class="text-muted small" style="font-size: 0.75rem;">Jelajahi inspirasi gaya harian ala Pinterest. Klik gambar untuk rincian item.</p>
         </div>
 
+        <!-- FILTER STYLE DENGAN WARNA DARK AKTIF (TANPA ANGKA KUTE) -->
         <div class="d-flex gap-2 overflow-auto pb-2 mb-3" style="scrollbar-width: none;">
-            <button class="btn btn-sm btn-dark rounded-pill px-3 py-1 fw-bold style-btn active" style="font-size: 0.72rem; white-space: nowrap; background: var(--text-primary); border-color: var(--text-primary);" onclick="filterLookbook('Semua', this)">Semua Gaya</button>
+            <button class="btn btn-sm btn-dark rounded-pill px-3 py-1 fw-bold style-btn active" style="font-size: 0.72rem; white-space: nowrap; background: var(--text-primary); border-color: var(--text-primary);" onclick="filterLookbook('Semua', this)">Semua</button>
             <button class="btn btn-sm btn-outline-dark rounded-pill px-3 py-1 style-btn" style="font-size: 0.72rem; white-space: nowrap;" onclick="filterLookbook('Casual', this)">Casual</button>
-            <button class="btn btn-sm btn-outline-dark rounded-pill px-3 py-1 style-btn" style="font-size: 0.72rem; white-space: nowrap;" onclick="filterLookbook('Korean', this)">Korean Style</button>
-            <button class="btn btn-sm btn-outline-dark rounded-pill px-3 py-1 style-btn" style="font-size: 0.72rem; white-space: nowrap;" onclick="filterLookbook('Formal', this)">Formal / Kerja</button>
+            <button class="btn btn-sm btn-outline-dark rounded-pill px-3 py-1 style-btn" style="font-size: 0.72rem; white-space: nowrap;" onclick="filterLookbook('Formal', this)">Formal</button>
+            <button class="btn btn-sm btn-outline-dark rounded-pill px-3 py-1 style-btn" style="font-size: 0.72rem; white-space: nowrap;" onclick="filterLookbook('Korean', this)">Korean</button>
+            <button class="btn btn-sm btn-outline-dark rounded-pill px-3 py-1 style-btn" style="font-size: 0.72rem; white-space: nowrap;" onclick="filterLookbook('Streetwear', this)">Streetwear</button>
+            <button class="btn btn-sm btn-outline-dark rounded-pill px-3 py-1 style-btn" style="font-size: 0.72rem; white-space: nowrap;" onclick="filterLookbook('Vintage', this)">Vintage</button>
         </div>
 
-        <div class="row g-3" id="lookbook-feed">
-            <div class="col-12 look-card" data-style="Casual">
-                <div class="card-custom p-3">
-                    <div class="img-container rounded-3 mb-3">
-                        <img src="Asset/s8.webp" alt="Sage Casual Transit Look">
+        <!-- PINTEREST GRID MASONRY (2 KOLOM ELEGANT) -->
+        <div class="row g-2" id="lookbook-feed-container">
+            <!-- 1. Casual 1 -->
+            <div class="col-6 look-card" data-style="Casual">
+                <div class="pinterest-pin p-2" onclick="openLookbookDetail('Sage Casual Transit Look', 'Asset/s8.webp', ['Cottongo Kemeja Panjang Linen', 'Loose Pants', 'Tas Selempang Kanvas'], ['https://shopee.co.id/product/54893689/2434711910', 'https://shopee.co.id/product/601605914/20005074766', 'https://s.shopee.co.id/7AeFW9lcdd'])">
+                    <div class="pin-img-box rounded-3 mb-2">
+                        <img src="Asset/s8.webp" alt="Casual 1" loading="lazy">
                     </div>
-                    <span class="badge bg-secondary mb-1 align-self-start" style="font-size: 0.65rem;">Agenda: Kuliah & Hangout</span>
-                    <h6 class="fw-bold mb-1">Sage Casual Transit Look</h6>
-                    <p class="text-muted small mb-3" style="font-size: 0.75rem;">Kombinasi kemeja linen ringan dengan celana longgar yang adem dipakai seharian.</p>
-                    <button class="btn-sage btn-sm w-100 py-2 fw-bold" style="font-size: 0.75rem;" onclick="openLookbookDetail('Sage Casual Transit Look', 'Asset/s8.webp', ['Cottongo Kemeja Panjang Linen', 'Loose Pants', 'Tas Selempang Kanvas'], ['https://shopee.co.id/product/54893689/2434711910', 'https://shopee.co.id/product/601605914/20005074766', 'https://s.shopee.co.id/7AeFW9lcdd'])">
-                        <i class="fa-solid fa-list-check me-1"></i> Lihat Detail Setelan & Beli per Item
-                    </button>
+                    <h6 class="fw-bold mb-1 text-truncate" style="font-size: 0.75rem;">Sage Casual Transit</h6>
+                    <span class="text-muted d-block text-truncate" style="font-size: 0.65rem;">Kemeja linen + Loose pants</span>
                 </div>
             </div>
 
-            <div class="col-12 look-card" data-style="Formal">
-                <div class="card-custom p-3">
-                    <div class="img-container rounded-3 mb-3">
-                        <img src="Asset/s5.webp" alt="First-Jobber Sharp Look">
+            <!-- 2. Casual 2 -->
+            <div class="col-6 look-card" data-style="Casual">
+                <div class="pinterest-pin p-2" onclick="openLookbookDetail('Striped Tee Weekend Vibe', 'Asset/s136.webp', ['Kaos Pria Strip Two Lane', 'Celana Pendek Boardshort', 'Sepatu Sneakers'], ['https://s.shopee.co.id/9APieW50wC', 'https://s.shopee.co.id/5q8jw658TR', 'https://s.shopee.co.id/2qV9vlF848'])">
+                    <div class="pin-img-box rounded-3 mb-2">
+                        <img src="Asset/s136.webp" alt="Casual 2" loading="lazy">
                     </div>
-                    <span class="badge bg-secondary mb-1 align-self-start" style="font-size: 0.65rem;">Agenda: Meeting & First Jobber</span>
-                    <h6 class="fw-bold mb-1">First-Jobber Sharp Look</h6>
-                    <p class="text-muted small mb-3" style="font-size: 0.75rem;">Setelan vest bordir dan celana bahan formal yang rapi dan profesional.</p>
-                    <button class="btn-sage btn-sm w-100 py-2 fw-bold" style="font-size: 0.75rem;" onclick="openLookbookDetail('First-Jobber Sharp Look', 'Asset/s5.webp', ['Luna Bordir Vest', 'Celana Bahan Formal Pria Slimfit', 'SOVELLA Loafers'], ['https://shopee.co.id/product/10432508/42650878662', 'https://shopee.co.id/product/258266328/6594192211', 'https://shopee.co.id/product/424496860/22756984691'])">
-                        <i class="fa-solid fa-list-check me-1"></i> Lihat Detail Setelan & Beli per Item
-                    </button>
+                    <h6 class="fw-bold mb-1 text-truncate" style="font-size: 0.75rem;">Striped Tee Weekend</h6>
+                    <span class="text-muted d-block text-truncate" style="font-size: 0.65rem;">Kaos garis + Boardshort</span>
                 </div>
             </div>
 
-            <div class="col-12 look-card" data-style="Korean">
-                <div class="card-custom p-3">
-                    <div class="img-container rounded-3 mb-3">
-                        <img src="Asset/s12.webp" alt="Korean Knitwear Vibe">
+            <!-- 3. Formal 1 -->
+            <div class="col-6 look-card" data-style="Formal">
+                <div class="pinterest-pin p-2" onclick="openLookbookDetail('First-Jobber Sharp Look', 'Asset/s5.webp', ['Luna Bordir Vest', 'Celana Bahan Formal Pria Slimfit', 'SOVELLA Loafers'], ['https://shopee.co.id/product/10432508/42650878662', 'https://shopee.co.id/product/258266328/6594192211', 'https://shopee.co.id/product/424496860/22756984691'])">
+                    <div class="pin-img-box rounded-3 mb-2">
+                        <img src="Asset/s5.webp" alt="Formal 1" loading="lazy">
                     </div>
-                    <span class="badge bg-secondary mb-1 align-self-start" style="font-size: 0.65rem;">Agenda: Cafe Date & Hangout</span>
-                    <h6 class="fw-bold mb-1">Korean Knitwear Vibe</h6>
-                    <p class="text-muted small mb-3" style="font-size: 0.75rem;">Sweater rajut gaya Korea dipadu rok denim pendek yang chic dan stylish.</p>
-                    <button class="btn-sage btn-sm w-100 py-2 fw-bold" style="font-size: 0.75rem;" onclick="openLookbookDetail('Korean Knitwear Vibe', 'Asset/s12.webp', ['Korean Knitwear Sweater', 'Rok Denim Wanita Pendek', 'Shoulder Bag Wanita'], ['https://shopee.co.id/product/1338930555/26266681359', 'https://shopee.co.id/product/366055628/22561417709', 'https://s.shopee.co.id/3g4NLcSF1R'])">
-                        <i class="fa-solid fa-list-check me-1"></i> Lihat Detail Setelan & Beli per Item
-                    </button>
+                    <h6 class="fw-bold mb-1 text-truncate" style="font-size: 0.75rem;">First-Jobber Sharp</h6>
+                    <span class="text-muted d-block text-truncate" style="font-size: 0.65rem;">Vest bordir + Celana bahan</span>
+                </div>
+            </div>
+
+            <!-- 4. Formal 2 -->
+            <div class="col-6 look-card" data-style="Formal">
+                <div class="pinterest-pin p-2" onclick="openLookbookDetail('Executive Crop Blazer', 'Asset/s134.webp', ['Blazer Crop Outer Wanita', 'Celana Panjang Baggy pants', 'Sepatu Pantofel Wanita'], ['https://s.shopee.co.id/30p5HXI8Ji', 'https://s.shopee.co.id/9pfPZIh6jO', 'https://s.shopee.co.id/4VdNvYaSZj'])">
+                    <div class="pin-img-box rounded-3 mb-2">
+                        <img src="Asset/s134.webp" alt="Formal 2" loading="lazy">
+                    </div>
+                    <h6 class="fw-bold mb-1 text-truncate" style="font-size: 0.75rem;">Executive Crop Blazer</h6>
+                    <span class="text-muted d-block text-truncate" style="font-size: 0.65rem;">Blazer crop + Pantofel</span>
+                </div>
+            </div>
+
+            <!-- 5. Korean 1 -->
+            <div class="col-6 look-card" data-style="Korean">
+                <div class="pinterest-pin p-2" onclick="openLookbookDetail('Korean Knitwear Vibe', 'Asset/s12.webp', ['Korean Knitwear Sweater', 'Rok Denim Wanita Pendek', 'Shoulder Bag Wanita'], ['https://shopee.co.id/product/1338930555/26266681359', 'https://shopee.co.id/product/366055628/22561417709', 'https://s.shopee.co.id/3g4NLcSF1R'])">
+                    <div class="pin-img-box rounded-3 mb-2">
+                        <img src="Asset/s12.webp" alt="Korean 1" loading="lazy">
+                    </div>
+                    <h6 class="fw-bold mb-1 text-truncate" style="font-size: 0.75rem;">Korean Knitwear Vibe</h6>
+                    <span class="text-muted d-block text-truncate" style="font-size: 0.65rem;">Sweater rajut + Rok denim</span>
+                </div>
+            </div>
+
+            <!-- 6. Korean 2 -->
+            <div class="col-6 look-card" data-style="Korean">
+                <div class="pinterest-pin p-2" onclick="openLookbookDetail('Soft Pastel Seoul', 'Asset/s104.webp', ['Sweater Rajut Wanita', 'Celana Lavie Pants Kulot', 'Flat Shoes Wanita Mary Jane'], ['https://s.shopee.co.id/3LRYAr14KO', 'https://s.shopee.co.id/3VlM0BS0tM', 'https://s.shopee.co.id/6L58IlY7bU'])">
+                    <div class="pin-img-box rounded-3 mb-2">
+                        <img src="Asset/s104.webp" alt="Korean 2" loading="lazy">
+                    </div>
+                    <h6 class="fw-bold mb-1 text-truncate" style="font-size: 0.75rem;">Soft Pastel Seoul</h6>
+                    <span class="text-muted d-block text-truncate" style="font-size: 0.65rem;">Rajut pastel + Kulot</span>
+                </div>
+            </div>
+
+            <!-- 7. Streetwear 1 -->
+            <div class="col-6 look-card" data-style="Streetwear">
+                <div class="pinterest-pin p-2" onclick="openLookbookDetail('Urban Oversized Hoodie', 'Asset/s7.webp', ['Hoodie', 'Jeans Panjang Pria Washed Baggy', 'Tas Selempang Corduroy'], ['https://shopee.co.id/product/285244527/19308033208', 'https://s.shopee.co.id/AKbg90VLv2', 'https://s.shopee.co.id/1qcjAE5Abh'])">
+                    <div class="pin-img-box rounded-3 mb-2">
+                        <img src="Asset/s7.webp" alt="Streetwear 1" loading="lazy">
+                    </div>
+                    <h6 class="fw-bold mb-1 text-truncate" style="font-size: 0.75rem;">Urban Oversized Hoodie</h6>
+                    <span class="text-muted d-block text-truncate" style="font-size: 0.65rem;">Hoodie + Baggy jeans</span>
+                </div>
+            </div>
+
+            <!-- 8. Streetwear 2 -->
+            <div class="col-6 look-card" data-style="Streetwear">
+                <div class="pinterest-pin p-2" onclick="openLookbookDetail('Y2K Ribbon Statement', 'Asset/s2.webp', ['Ribbon Top y2k', 'Celana Jeans Wanita Highwaist Straight Cut', 'Kacamata Retro/Bingkai Oval'], ['https://shopee.co.id/product/342004426/27450229762', 'https://shopee.co.id/product/159716084/43252230818', 'https://s.shopee.co.id/7VH5gwSfM0'])">
+                    <div class="pin-img-box rounded-3 mb-2">
+                        <img src="Asset/s2.webp" alt="Streetwear 2" loading="lazy">
+                    </div>
+                    <h6 class="fw-bold mb-1 text-truncate" style="font-size: 0.75rem;">Y2K Ribbon Statement</h6>
+                    <span class="text-muted d-block text-truncate" style="font-size: 0.65rem;">Ribbon top + Highwaist</span>
+                </div>
+            </div>
+
+            <!-- 9. Vintage 1 -->
+            <div class="col-6 look-card" data-style="Vintage">
+                <div class="pinterest-pin p-2" onclick="openLookbookDetail('Ethnic Heritage Vintage', 'Asset/s31.webp', ['Vest Batik', 'Celana panjang Chinos', 'Tas Selempang Wanita Kulit Sintetis Glossy'], ['https://shopee.co.id/product/278143282/23759485071', 'https://s.shopee.co.id/5fpqaW2UVU', 'https://s.shopee.co.id/8KqCgbqAMT'])">
+                    <div class="pin-img-box rounded-3 mb-2">
+                        <img src="Asset/s31.webp" alt="Vintage 1" loading="lazy">
+                    </div>
+                    <h6 class="fw-bold mb-1 text-truncate" style="font-size: 0.75rem;">Ethnic Heritage Vintage</h6>
+                    <span class="text-muted d-block text-truncate" style="font-size: 0.65rem;">Vest batik + Chinos</span>
+                </div>
+            </div>
+
+            <!-- 10. Vintage 2 -->
+            <div class="col-6 look-card" data-style="Vintage">
+                <div class="pinterest-pin p-2" onclick="openLookbookDetail('90s Denim Heritage', 'Asset/s10.webp', ['DENIM OVERSIZED SHIRT', 'MAXI SKIRT RUFLA RUFFLE REMPEL', 'Sepatu Flat Oldschool'], ['https://shopee.co.id/product/988805007/27655337699', 'https://shopee.co.id/product/11465979/26728624095', 'https://s.shopee.co.id/2BFZL7wNZb'])">
+                    <div class="pin-img-box rounded-3 mb-2">
+                        <img src="Asset/s10.webp" alt="Vintage 2" loading="lazy">
+                    </div>
+                    <h6 class="fw-bold mb-1 text-truncate" style="font-size: 0.75rem;">90s Denim Heritage</h6>
+                    <span class="text-muted d-block text-truncate" style="font-size: 0.65rem;">Denim shirt + Maxi skirt</span>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- ================= 3. TAB SMART WARDROBE (AI MIX & MATCH ILLUSTRATION GENERATOR) ================= -->
+    <!-- ================= 3. TAB SMART WARDROBE ================= -->
     <div id="page-wardrobe" class="app-page d-none p-3">
         <div class="text-center mb-3">
             <h4 class="fw-bold brand-heading mb-1">Lemari Digital (Smart Wardrobe)</h4>
             <p class="text-muted small" style="font-size: 0.75rem;">Pilih item ke kanvas, lalu gunakan teknologi AI untuk menghasilkan ilustrasi rencana mix & match otomatis!</p>
         </div>
 
-        <!-- KANVAS MULTI-ITEM -->
         <div class="p-3 bg-white rounded-4 border mb-3 shadow-sm">
             <div class="d-flex justify-content-between align-items-center mb-2">
                 <h6 class="fw-bold small mb-0 text-dark"><i class="fa-solid fa-wand-magic-sparkles text-success me-1"></i> Kanvas Mix & Match (<span id="canvas-count">0</span> Item)</h6>
@@ -410,30 +503,24 @@
                 </div>
             </div>
 
-            <!-- TOMBOL AI MIX AND MATCH GENERATOR -->
             <div class="mt-3">
                 <button class="btn btn-sage w-100 py-2 fw-bold shadow-sm ai-pulse-glow" style="font-size: 0.78rem;" onclick="generateAiIllustration()">
                     <i class="fa-solid fa-robot me-1"></i> ✨ Buat Ilustrasi Mix & Match (AI Layout)
                 </button>
             </div>
 
-            <!-- INDIKATOR LOADING AI -->
             <div id="ai-loading-state" class="text-center py-3 d-none">
                 <div class="spinner-border spinner-border-sm text-success me-2" role="status"></div>
                 <span class="small fw-bold text-dark" style="font-size: 0.72rem;">Sistem AI sedang memproses & menyusun ilustrasi layout OOTD...</span>
             </div>
 
-            <!-- KOTAK PREVIEW ILUSTRASI AI FLAT LAY OOTD -->
             <div id="auto-outfit-preview" class="mt-3 p-3 bg-white rounded-4 border border-success shadow-sm d-none">
                 <div class="d-flex justify-content-between align-items-center mb-2">
                     <span class="badge bg-success fw-bold" style="font-size: 0.68rem;">✨ Hasil Ilustrasi AI Mix & Match</span>
                     <span class="fw-bold text-dark small fs-6" id="auto-total-price">Rp0</span>
                 </div>
                 
-                <!-- AREA GRID FLAT LAY ESTETIK AI -->
-                <div id="flat-lay-container" class="p-3 rounded-3 mb-3 border shadow-sm position-relative d-flex flex-column align-items-center justify-content-center gap-2" style="background: #FAF8F5; min-height: 280px;">
-                    <!-- Diisi otomatis via AI Generator -->
-                </div>
+                <div id="flat-lay-container" class="p-3 rounded-3 mb-3 border shadow-sm position-relative d-flex flex-column align-items-center justify-content-center gap-2" style="background: #FAF8F5; min-height: 280px;"></div>
 
                 <div class="bg-success-subtle p-2 rounded-2 border border-success" style="font-size: 0.72rem;">
                     <p class="fw-bold text-dark mb-1"><i class="fa-solid fa-check-circle text-success me-1"></i> Rekomendasi AI Stylist:</p>
@@ -472,23 +559,24 @@
             </div>
             <h5 class="fw-bold mb-0 brand-heading" id="profile-name">Veroo</h5>
             <p class="text-muted small mb-2" style="font-size: 0.75rem;" id="profile-email">veroomikaaajn@gmail.com</p>
-            <span class="badge text-white px-3 py-1 rounded-pill" style="font-size: 0.65rem; background-color: var(--primary-sage);">Member Aktif Pantaskan</span>
+            <span class="badge text-white px-3 py-1 rounded-pill mb-2" style="font-size: 0.65rem; background-color: var(--primary-sage);">Member Aktif Pantaskan</span>
+            <div>
+                <button class="btn btn-sm btn-outline-dark rounded-pill px-3 py-1" style="font-size: 0.7rem;" onclick="openEditProfileModal()">
+                    <i class="fa-solid fa-pen-to-square me-1"></i> Edit Profil / Ubah Nama
+                </button>
+            </div>
         </div>
 
         <div class="list-group shadow-sm rounded-4 overflow-hidden border mb-3" style="font-size: 0.82rem;">
-            <a href="#" onclick="openProfileModal('Style & Activity Preference', 'Atur kembali preferensi gaya dan agenda harianmu untuk memperbarui rekomendasi katalog:<br><br><b>Pilihan Style:</b> Minimalist, Casual, Korean, Streetwear, Formal, Vintage<br><b>Pilihan Agenda:</b> Kuliah, Kerja/Magang, Hangout, Meeting, Traveling')" class="list-group-item list-group-item-action py-3 d-flex justify-content-between align-items-center">
-                <span><i class="fa-solid fa-sliders text-muted me-2"></i> Style & Activity Preference</span>
+            <a href="#" onclick="openPreferenceModal()" class="list-group-item list-group-item-action py-3 d-flex justify-content-between align-items-center">
+                <span><i class="fa-solid fa-sliders text-muted me-2"></i> Atur Ulang Style & Preference</span>
                 <i class="fa-solid fa-chevron-right text-muted small"></i>
             </a>
-            <a href="#" onclick="openProfileModal('Notifikasi OOTD Harian', 'Atur pengingat push notification agar kamu tidak ketinggalan inspirasi setelan harian:<br><br><input type=\'checkbox\' checked> Aktifkan Pengingat Pagi (Jam 07:00 WIB)<br><input type=\'checkbox\' checked> Rekomendasi Transisi Agenda')" class="list-group-item list-group-item-action py-3 d-flex justify-content-between align-items-center">
-                <span><i class="fa-solid fa-bell text-muted me-2"></i> Notifikasi OOTD Harian</span>
-                <i class="fa-solid fa-chevron-right text-muted small"></i>
-            </a>
-            <a href="#" onclick="openProfileModal('Pusat Bantuan & FAQ', '<b>1. Cara Belanja:</b> Klik tombol Beli Shopee pada produk katalog atau lookbook untuk diarahkan langsung ke Official Store.<br><br><b>2. Cara Konsultasi:</b> Tekan tombol Tanya Stylist untuk terhubung otomatis dengan WhatsApp Personal Stylist kami.<br><br><b>3. Panduan Ukuran (Size Guide):</b> Tersedia standar ukuran S, M, L, XL pada rincian toko.')" class="list-group-item list-group-item-action py-3 d-flex justify-content-between align-items-center">
+            <a href="#" onclick="openFaqModal()" class="list-group-item list-group-item-action py-3 d-flex justify-content-between align-items-center">
                 <span><i class="fa-solid fa-circle-question text-muted me-2"></i> Pusat Bantuan & FAQ</span>
                 <i class="fa-solid fa-chevron-right text-muted small"></i>
             </a>
-            <a href="https://api.whatsapp.com/send?phone=6285290956001&text=Halo%20Stylist%20Pantaskan,%20saya%20Veroo.%20Saya%20mau%20konsultasi%20padu%20padan%20outfit%20untuk%20agenda%20kuliah." target="_blank" rel="noopener noreferrer" class="list-group-item list-group-item-action py-3 d-flex justify-content-between align-items-center">
+            <a href="https://api.whatsapp.com/send?phone=6285290956001&text=Halo%20Stylist%20Pantaskan,%20saya%20mau%20konsultasi%20style!" target="_blank" rel="noopener noreferrer" class="list-group-item list-group-item-action py-3 d-flex justify-content-between align-items-center">
                 <span><i class="fa-brands fa-whatsapp text-success me-2"></i> Hubungi Stylist Personal WA</span>
                 <i class="fa-solid fa-chevron-right text-muted small"></i>
             </a>
@@ -508,7 +596,9 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <img id="modal-look-img" src="" alt="Look" class="w-100 rounded-3 mb-3" style="aspect-ratio:1/1; object-fit:cover;">
+                    <div class="rounded-3 mb-3 overflow-hidden bg-light" style="aspect-ratio: 3/4;">
+                        <img id="modal-look-img" src="" alt="Look" class="w-100 h-100 object-fit-cover">
+                    </div>
                     <p class="text-muted small mb-2 fw-bold">Rincian Item Penyusun & Pautan Beli:</p>
                     <div id="modal-look-items" class="d-flex flex-column gap-2 mb-3"></div>
                 </div>
@@ -519,13 +609,93 @@
         </div>
     </div>
 
-    <!-- MODAL PROFILE DETAIL -->
-    <div class="modal fade" id="profileModal" tabindex="-1" aria-hidden="true">
+    <!-- MODAL EDIT PROFILE -->
+    <div class="modal fade" id="editProfileModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content rounded-4 p-4 bg-white">
-                <h5 class="fw-bold brand-heading mb-3" id="prof-modal-title">Pengaturan</h5>
-                <p class="text-muted small mb-4" id="prof-modal-body" style="line-height: 1.6;"></p>
-                <button type="button" class="btn-sage w-100 py-2" data-bs-dismiss="modal">Tutup</button>
+                <h5 class="fw-bold brand-heading mb-3">Edit Profil Akun</h5>
+                <div class="mb-3 text-start">
+                    <label class="small text-muted fw-bold mb-1">Nama Lengkap / Panggilan</label>
+                    <input type="text" class="form-input-figma" id="input-edit-name" placeholder="Masukkan nama...">
+                </div>
+                <div class="mb-4 text-start">
+                    <label class="small text-muted fw-bold mb-1">Alamat Email</label>
+                    <input type="email" class="form-input-figma" id="input-edit-email" placeholder="Masukkan email...">
+                </div>
+                <button type="button" class="btn-sage w-100 py-2" onclick="saveProfileChanges()">Simpan Perubahan</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL PREFERENCE -->
+    <div class="modal fade" id="preferenceModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content rounded-4 p-4 bg-white">
+                <h5 class="fw-bold brand-heading mb-2">Atur Ulang Style & Preference</h5>
+                <p class="text-muted small mb-3">Pilih preferensi gaya berpakaian dan agenda utamamu agar rekomendasi katalog semakin akurat:</p>
+                <div class="text-start mb-3" style="font-size: 0.8rem;">
+                    <label class="fw-bold mb-1">Pilihan Style Favorit:</label><br>
+                    <div class="d-flex flex-wrap gap-2 mt-1">
+                        <span class="badge bg-light text-dark border p-2">Casual</span>
+                        <span class="badge bg-light text-dark border p-2">Korean Style</span>
+                        <span class="badge bg-light text-dark border p-2">Formal / Kerja</span>
+                        <span class="badge bg-light text-dark border p-2">Streetwear</span>
+                        <span class="badge bg-light text-dark border p-2">Vintage</span>
+                    </div>
+                </div>
+                <div class="text-start mb-4" style="font-size: 0.8rem;">
+                    <label class="fw-bold mb-1">Agenda Utama:</label><br>
+                    <span class="text-muted">Kuliah, Hangout, First Jobber / Meeting Kantor, Traveling.</span>
+                </div>
+                <button type="button" class="btn-sage w-100 py-2" onclick="alert('Preferensi berhasil diperbarui!'); bootstrap.Modal.getInstance(document.getElementById('preferenceModal')).hide();">Terapkan Preferensi Baru</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL FAQ INTERAKTIF -->
+    <div class="modal fade" id="faqModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content rounded-4 p-4 bg-white">
+                <h5 class="fw-bold brand-heading mb-3">Pusat Bantuan & FAQ</h5>
+                <div class="accordion accordion-flush" id="faqAccordion" style="font-size: 0.8rem;">
+                    <div class="accordion-item border mb-2 rounded-3 overflow-hidden">
+                        <h2 class="accordion-header" id="headingOne">
+                            <button class="accordion-button collapsed py-2 px-3 fw-bold bg-light text-dark" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" style="font-size: 0.8rem;">
+                                Bagaimana cara berbelanja produk di Pantaskan?
+                            </button>
+                        </h2>
+                        <div id="collapseOne" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body text-muted py-2 px-3">
+                                Cukup pilih produk di menu Katalog atau Lookbook, lalu klik tombol <strong>"Beli Shopee"</strong> untuk diarahkan langsung ke Official Store toko terkait.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item border mb-2 rounded-3 overflow-hidden">
+                        <h2 class="accordion-header" id="headingTwo">
+                            <button class="accordion-button collapsed py-2 px-3 fw-bold bg-light text-dark" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" style="font-size: 0.8rem;">
+                                Bagaimana cara menggunakan fitur Lemari Digital & AI?
+                            </button>
+                        </h2>
+                        <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body text-muted py-2 px-3">
+                                Tandai produk di katalog dengan ikon bookmark ❤️, buka menu <strong>Lemari</strong>, masukkan ke kanvas, lalu klik tombol <strong>"Buat Ilustrasi Mix & Match"</strong> untuk merakit setelan otomatis!
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item border mb-2 rounded-3 overflow-hidden">
+                        <h2 class="accordion-header" id="headingThree">
+                            <button class="accordion-button collapsed py-2 px-3 fw-bold bg-light text-dark" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" style="font-size: 0.8rem;">
+                                Bagaimana cara berkonsultasi langsung dengan Personal Stylist?
+                            </button>
+                        </h2>
+                        <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body text-muted py-2 px-3">
+                                Kamu bisa menekan tombol <strong>"Tanya Stylist"</strong> pada produk tertentu atau melalui tombol konsultasi WhatsApp di tab Beranda & Lemari untuk terhubung langsung dengan stylist profesional kami.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button type="button" class="btn-sage w-100 py-2 mt-3" data-bs-dismiss="modal">Tutup Bantuan</button>
             </div>
         </div>
     </div>
@@ -550,7 +720,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
     <script>
-        /* 1. DATA PRODUK KATALOG (100 ITEM KONSISTEN SESUAI DOKUMEN KEDUA) */
+        /* 1. DATA PRODUK KATALOG (100 ITEM KONSISTEN SESUAI DOKUMEN WEBSITES UTAMA) */
         const productTemplates = [
             { title: "Ribbon Top y2k", cat: "Atasan", price: "Rp68.553", img: "Asset/s2.webp", link: "https://shopee.co.id/product/342004426/27450229762?affiliate_seller_voucher_token=3Yrr9Jdp5hGMkU9DCtfrUZAjmDJiKJowaZMn9pXFKoQ8X&channel_code=MyCollection" },
             { title: "Sweater Rajut Wanita", cat: "Atasan", price: "Rp59.509", img: "Asset/s104.webp", link: "https://s.shopee.co.id/3LRYAr14KO?share_channel_code=1" },
@@ -668,7 +838,7 @@
             else if (i <= 88) { catLabel = "Tas"; } 
             else { catLabel = "Alas Kaki"; }
 
-            let waText = `Halo Stylist Pantaskan, saya tertarik untuk membeli produk '${titleStr}' (ID: ${i}) seharga ${template.price}. Saya ingin berkonsultasi mengenai rekomendasi padu padan (mix & match) outfit yang cocok untuk produk ini beserta informasi ketersediaan stoknya. Mohon bantuannya ya, terima kasih!`;
+            let waText = `Halo Stylist Pantaskan, saya tertarik untuk membeli produk '${titleStr}' (ID: ${i}) seharga ${template.price}.`;
 
             productsData.push({
                 id: i,
@@ -681,7 +851,6 @@
             });
         }
 
-        /* 2. DATABASE BACKEND SIMULATED VIA LOCALSTORAGE & REST ENDPOINT READY */
         let currentUser = JSON.parse(localStorage.getItem('pantaskan_user')) || { name: 'Veroo', email: 'veroomikaaajn@gmail.com' };
         let wishlist = JSON.parse(localStorage.getItem('pantaskan_wishlist')) || [];
         let currentWardrobeFilter = 'Semua';
@@ -691,19 +860,12 @@
             const grid = document.getElementById(containerId);
             if (!grid) return;
 
-            if (data.length === 0) {
-                grid.innerHTML = `<div class="col-12 text-center text-muted py-4 small">Produk tidak ditemukan.</div>`;
-                return;
-            }
-
-            document.getElementById('product-count').innerText = `${data.length} Item`;
-
             grid.innerHTML = data.map(p => {
                 const isSaved = wishlist.includes(p.id);
                 return `
                     <div class="col-6">
                         <div class="card-custom">
-                            <button class="btn btn-sm position-absolute top-0 start-0 m-2 rounded-circle shadow-sm ${isSaved ? 'btn-dark' : 'btn-light'}" style="width: 28px; height: 28px; z-index:2;" onclick="toggleBookmark(${p.id})" title="Simpan">
+                            <button class="btn btn-sm position-absolute top-0 start-0 m-2 rounded-circle shadow-sm ${isSaved ? 'btn-dark' : 'btn-light'}" style="width: 28px; height: 28px; z-index:2;" onclick="toggleBookmark(${p.id})">
                                 <i class="fa-solid fa-bookmark ${isSaved ? 'text-white' : 'text-danger'}" style="font-size:0.75rem;"></i>
                             </button>
                             <div class="img-container">
@@ -717,12 +879,8 @@
                                     <div class="product-price">${p.price}</div>
                                 </div>
                                 <div class="d-flex flex-column gap-1 mt-auto">
-                                    <a href="${p.shopeeUrl}" target="_blank" rel="noopener noreferrer" class="btn-shopee">
-                                        <i class="fa-solid fa-cart-shopping"></i> Beli Shopee
-                                    </a>
-                                    <a href="https://api.whatsapp.com/send?phone=6285290956001&text=${p.waMessage}" target="_blank" rel="noopener noreferrer" class="btn-wa-outline">
-                                        <i class="fa-brands fa-whatsapp text-success"></i> Tanya Stylist
-                                    </a>
+                                    <a href="${p.shopeeUrl}" target="_blank" rel="noopener noreferrer" class="btn-shopee"><i class="fa-solid fa-cart-shopping"></i> Beli Shopee</a>
+                                    <a href="https://api.whatsapp.com/send?phone=6285290956001&text=${p.waMessage}" target="_blank" class="btn-wa-outline"><i class="fa-brands fa-whatsapp text-success"></i> Tanya Stylist</a>
                                 </div>
                             </div>
                         </div>
@@ -761,7 +919,6 @@
             ['home', 'lookbook', 'wardrobe', 'profile'].forEach(p => {
                 const pageEl = document.getElementById(`page-${p}`);
                 const mobNavEl = document.getElementById(`mob-nav-${p}`);
-                
                 if (pageEl) {
                     if (p === pageId) pageEl.classList.remove('d-none');
                     else pageEl.classList.add('d-none');
@@ -771,7 +928,6 @@
                     else mobNavEl.classList.remove('active');
                 }
             });
-
             if (pageId === 'wardrobe') renderWardrobe();
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
@@ -781,14 +937,11 @@
             document.querySelectorAll(".activity-btn").forEach(b => {
                 b.classList.remove("btn-dark", "active", "fw-bold");
                 b.style.background = "";
-                b.style.borderColor = "";
                 b.classList.add("btn-outline-dark");
             });
             btn.classList.remove("btn-outline-dark");
             btn.classList.add("btn-dark", "active", "fw-bold");
             btn.style.background = "var(--text-primary)";
-            btn.style.borderColor = "var(--text-primary)";
-
             currentCategory = cat;
             filterProducts();
         }
@@ -807,20 +960,15 @@
             document.querySelectorAll(".style-btn").forEach(b => {
                 b.classList.remove("btn-dark", "active", "fw-bold");
                 b.style.background = "";
-                b.style.borderColor = "";
                 b.classList.add("btn-outline-dark");
             });
             btn.classList.remove("btn-outline-dark");
             btn.classList.add("btn-dark", "active", "fw-bold");
             btn.style.background = "var(--text-primary)";
-            btn.style.borderColor = "var(--text-primary)";
 
             document.querySelectorAll(".look-card").forEach(card => {
-                if (style === 'Semua' || card.getAttribute('data-style') === style) {
-                    card.style.display = 'block';
-                } else {
-                    card.style.display = 'none';
-                }
+                if (style === 'Semua' || card.getAttribute('data-style') === style) card.style.display = 'block';
+                else card.style.display = 'none';
             });
         }
 
@@ -832,9 +980,7 @@
             container.innerHTML = itemsArray.map((item, idx) => `
                 <div class="p-2 bg-light rounded-3 border d-flex justify-content-between align-items-center" style="font-size:0.75rem;">
                     <span>${item}</span>
-                    <div class="d-flex gap-1">
-                        <a href="${linksArray[idx] || linksArray[0]}" target="_blank" class="btn btn-xs btn-danger px-2 py-1 text-white" style="font-size:0.65rem; text-decoration:none;">Beli</a>
-                    </div>
+                    <a href="${linksArray[idx] || linksArray[0]}" target="_blank" class="btn btn-xs btn-danger px-2 py-1 text-white" style="font-size:0.65rem; text-decoration:none;">Beli</a>
                 </div>
             `).join('');
 
@@ -842,10 +988,31 @@
             new bootstrap.Modal(document.getElementById('lookbookModal')).show();
         }
 
-        function openProfileModal(title, bodyHtml) {
-            document.getElementById('prof-modal-title').innerText = title;
-            document.getElementById('prof-modal-body').innerHTML = bodyHtml;
-            new bootstrap.Modal(document.getElementById('profileModal')).show();
+        function openEditProfileModal() {
+            document.getElementById('input-edit-name').value = currentUser.name;
+            document.getElementById('input-edit-email').value = currentUser.email;
+            new bootstrap.Modal(document.getElementById('editProfileModal')).show();
+        }
+
+        function saveProfileChanges() {
+            const newName = document.getElementById('input-edit-name').value;
+            const newEmail = document.getElementById('input-edit-email').value;
+            if (newName && newEmail) {
+                currentUser.name = newName;
+                currentUser.email = newEmail;
+                localStorage.setItem('pantaskan_user', JSON.stringify(currentUser));
+                updateProfileUI();
+                bootstrap.Modal.getInstance(document.getElementById('editProfileModal')).hide();
+                alert("Profil berhasil diperbarui!");
+            }
+        }
+
+        function openPreferenceModal() {
+            new bootstrap.Modal(document.getElementById('preferenceModal')).show();
+        }
+
+        function openFaqModal() {
+            new bootstrap.Modal(document.getElementById('faqModal')).show();
         }
 
         function confirmLogout() {
@@ -862,15 +1029,10 @@
             } else {
                 wishlist.push(id);
             }
-            
             localStorage.setItem('pantaskan_wishlist', JSON.stringify(wishlist));
             localStorage.setItem('pantaskan_canvas', JSON.stringify(canvasItems));
             document.getElementById('wishlist-count').innerText = wishlist.length;
-
             filterProducts();
-            if (!document.getElementById('page-wardrobe').classList.contains('d-none')) {
-                renderWardrobe();
-            }
         }
 
         function filterWardrobe(cat, btn) {
@@ -882,7 +1044,6 @@
             btn.classList.remove("btn-outline-dark");
             btn.classList.add("btn-dark", "active", "fw-bold");
             btn.style.background = "var(--text-primary)";
-
             currentWardrobeFilter = cat;
             renderWardrobe();
         }
@@ -890,7 +1051,6 @@
         function addToCanvas(id) {
             const product = productsData.find(p => p.id === id);
             if (!product) return;
-
             if (!canvasItems.some(item => item.id === id)) {
                 canvasItems.push(product);
                 localStorage.setItem('pantaskan_canvas', JSON.stringify(canvasItems));
@@ -911,7 +1071,6 @@
             document.getElementById('auto-outfit-preview').classList.add('d-none');
         }
 
-        /* 3. FUNGSI GENERATOR ILUSTRASI OTOMATIS BERBASIS AI */
         function generateAiIllustration() {
             if (canvasItems.length === 0) {
                 alert("Silakan masukkan minimal 1 atau beberapa item ke kanvas terlebih dahulu!");
@@ -924,7 +1083,6 @@
             loadingState.classList.remove('d-none');
             previewState.classList.add('d-none');
 
-            // SIMULASI PROSES AI REASONING & LAYOUT GENERATION
             setTimeout(() => {
                 loadingState.classList.add('d-none');
 
@@ -937,8 +1095,6 @@
                 document.getElementById('auto-total-price').innerText = `Total: Rp${totalPriceNum.toLocaleString('id-ID')}`;
                 
                 const flatLayContainer = document.getElementById('flat-lay-container');
-                
-                // MENGELOMPOKKAN ITEM BERDASARKAN HASIL PROSES AI
                 const atasan = canvasItems.filter(i => i.categoryLabel === 'Atasan');
                 const bawahan = canvasItems.filter(i => i.categoryLabel === 'Bawahan');
                 const outer = canvasItems.filter(i => i.categoryLabel === 'Outer');
@@ -946,52 +1102,35 @@
 
                 let htmlContent = `<div class="w-100 text-center text-muted small mb-1 fw-bold" style="font-size: 0.65rem; letter-spacing: 1px; text-transform: uppercase;">✦ AI Generated OOTD Layout Canvas ✦</div>`;
                 
-                // Outer
                 if (outer.length > 0) {
                     htmlContent += `<div class="d-flex justify-content-center gap-2 mb-1">`;
                     outer.forEach(o => htmlContent += `<div class="bg-white p-1 rounded shadow-sm border" style="width: 85px; height: 85px;"><img src="${o.image}" style="width:100%; height:100%; object-fit:cover;" class="rounded"></div>`);
                     htmlContent += `</div>`;
                 }
 
-                // Atasan
                 htmlContent += `<div class="d-flex justify-content-center align-items-center gap-2 mb-1 flex-wrap">`;
                 atasan.forEach(a => {
-                    htmlContent += `<div class="bg-white p-1 rounded shadow-sm border text-center" style="width: 90px;">
-                        <img src="${a.image}" style="width: 100%; height: 75px; object-fit: cover;" class="rounded mb-1">
-                        <span class="d-block text-truncate" style="font-size: 0.55rem; font-weight:700;">${a.title}</span>
-                    </div>`;
+                    htmlContent += `<div class="bg-white p-1 rounded shadow-sm border text-center" style="width: 90px;"><img src="${a.image}" style="width: 100%; height: 75px; object-fit: cover;" class="rounded mb-1"><span class="d-block text-truncate" style="font-size: 0.55rem; font-weight:700;">${a.title}</span></div>`;
                 });
                 htmlContent += `</div>`;
 
-                // Bawahan
                 htmlContent += `<div class="d-flex justify-content-center align-items-center gap-2 mb-2 flex-wrap">`;
                 bawahan.forEach(b => {
-                    htmlContent += `<div class="bg-white p-1 rounded shadow-sm border text-center" style="width: 105px;">
-                        <img src="${b.image}" style="width: 100%; height: 85px; object-fit: cover;" class="rounded mb-1">
-                        <span class="d-block text-truncate" style="font-size: 0.55rem; font-weight:700;">${b.title}</span>
-                    </div>`;
+                    htmlContent += `<div class="bg-white p-1 rounded shadow-sm border text-center" style="width: 105px;"><img src="${b.image}" style="width: 100%; height: 85px; object-fit: cover;" class="rounded mb-1"><span class="d-block text-truncate" style="font-size: 0.55rem; font-weight:700;">${b.title}</span></div>`;
                 });
                 htmlContent += `</div>`;
 
-                // Aksesoris & Pelengkap
                 if (aksesoris.length > 0) {
                     htmlContent += `<div class="border-top pt-2 w-100 d-flex justify-content-center gap-2 overflow-auto">`;
                     aksesoris.forEach(acc => {
-                        htmlContent += `<div class="bg-white p-1 rounded shadow-sm border text-center flex-shrink-0" style="width: 55px;">
-                            <img src="${acc.image}" style="width: 45px; height: 45px; object-fit: cover;" class="rounded">
-                        </div>`;
+                        htmlContent += `<div class="bg-white p-1 rounded shadow-sm border text-center flex-shrink-0" style="width: 55px;"><img src="${acc.image}" style="width: 45px; height: 45px; object-fit: cover;" class="rounded"></div>`;
                     });
                     htmlContent += `</div>`;
                 }
 
                 flatLayContainer.innerHTML = htmlContent;
-
                 const itemNames = canvasItems.map(i => `${i.title} (${i.categoryLabel})`).join(' + ');
-                document.getElementById('auto-breakdown-text').innerHTML = `
-                    <b>Item Diproses AI (${canvasItems.length} Item):</b> ${itemNames}<br>
-                    <b>Status Hasil:</b> Ilustrasi OOTD berhasil diracik otomatis oleh sistem AI dengan keserasian transisi aktivitas harianmu.
-                `;
-
+                document.getElementById('auto-breakdown-text').innerHTML = `<b>Item Diproses AI (${canvasItems.length} Item):</b> ${itemNames}<br><b>Status Hasil:</b> Ilustrasi OOTD berhasil diracik otomatis.`;
                 previewState.classList.remove('d-none');
             }, 800);
         }
@@ -1006,17 +1145,13 @@
             canvasCount.innerText = canvasItems.length;
 
             if (canvasItems.length === 0) {
-                canvasGrid.innerHTML = `
-                    <div class="col-12 text-center text-muted small py-3" style="font-size: 0.7rem;">
-                        Belum ada item di kanvas. Pilih item Atasan, Bawahan, Outer, Tas, atau Alas Kaki dari bawah!
-                    </div>
-                `;
+                canvasGrid.innerHTML = `<div class="col-12 text-center text-muted small py-3" style="font-size: 0.7rem;">Belum ada item di kanvas. Pilih item dari katalog!</div>`;
             } else {
                 canvasGrid.innerHTML = canvasItems.map(item => `
                     <div class="col-3 text-center position-relative">
                         <div class="bg-white p-1 rounded-3 border shadow-sm position-relative">
                             <button onclick="removeFromCanvas(${item.id})" class="btn btn-danger btn-xs position-absolute top-0 end-0 rounded-circle" style="width:16px; height:16px; font-size:8px; padding:0; display:flex; align-items:center; justify-content:center; transform: translate(3px, -3px);">×</button>
-                            <img src="${item.image}" style="height:48px; width:100%; object-fit:cover;" class="mb-1 rounded" onerror="this.src='https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=500&auto=format&fit=crop&q=60'">
+                            <img src="${item.image}" style="height:48px; width:100%; object-fit:cover;" class="mb-1 rounded">
                             <span style="font-size:0.55rem; font-weight:700;" class="text-truncate d-block">${item.title}</span>
                         </div>
                     </div>
@@ -1051,7 +1186,7 @@
                 <div class="col-6">
                     <div class="card-custom">
                         <div class="img-container">
-                            <img src="${p.image}" alt="${p.title}" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=500&auto=format&fit=crop&q=60'">
+                            <img src="${p.image}" alt="${p.title}" loading="lazy">
                         </div>
                         <div class="p-2">
                             <span class="badge-category mb-1">${p.categoryLabel}</span>
@@ -1067,8 +1202,8 @@
                 </div>
             `).join('');
 
-            const canvasNames = canvasItems.length > 0 ? canvasItems.map(i => `${i.title} (${i.categoryLabel})`).join(', ') : 'Belum ada item';
-            const mixText = `Halo Stylist Pantaskan, saya ${currentUser.name} telah meracik rekomendasi AI ilustrasi setelan transisi outfit utuh di lemari digital saya berisi item: ${canvasNames}. Mohon masukan dan rekomendasi keserasiannya ya!`;
+            const canvasNames = canvasItems.length > 0 ? canvasItems.map(i => i.title).join(', ') : 'Belum ada item';
+            const mixText = `Halo Stylist Pantaskan, saya ${currentUser.name} telah meracik ilustrasi OOTD di lemari digital saya berisi item: ${canvasNames}. Mohon masukan dan rekomendasi keserasiannya ya!`;
             document.getElementById('wa-consult-btn').href = `https://api.whatsapp.com/send?phone=6285290956001&text=${encodeURIComponent(mixText)}`;
         }
 
